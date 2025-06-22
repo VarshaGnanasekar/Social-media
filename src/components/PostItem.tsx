@@ -8,12 +8,11 @@ interface Props {
 export const PostItem = ({ post }: Props) => {
   return (
     <div className="relative group transition-transform duration-300 hover:scale-[1.02]">
-      {/* Gradient shadow effect */}
       <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-500 pointer-events-none"></div>
       
       <Link to={`/post/${post.id}`} className="block relative z-10 h-full">
         <div className="w-80 h-96 bg-gray-900 border border-gray-700 rounded-2xl text-white flex flex-col p-6 overflow-hidden transition-all duration-300 group-hover:border-gray-600 group-hover:shadow-xl">
-          {/* Header: Avatar and Title */}
+        
           <div className="flex items-center gap-3">
             {post.avatar_url ? (
               <img
@@ -29,7 +28,7 @@ export const PostItem = ({ post }: Props) => {
             </h3>
           </div>
 
-          {/* Image Banner */}
+        
           <div className="mt-4 mb-3 flex-1 relative overflow-hidden rounded-xl">
             <img
               src={post.image_url}
