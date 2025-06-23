@@ -40,14 +40,17 @@ export const MyPosts = () => {
   if (data?.length === 0) return <div className="text-gray-400 text-center">You haven't created any posts yet.</div>;
 
   return (
-    
-    <div className="flex flex-wrap gap-6 justify-center">
+    <div>
       <h2 className="text-6xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
         My Posts
       </h2>
+      <div className="flex flex-wrap gap-6 justify-center">
+      
       {data?.map((post) => (
         <PostItem key={post.id} post={post} />
       ))}
     </div>
+    </div>
+    
   );
 };
