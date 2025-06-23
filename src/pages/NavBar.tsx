@@ -42,6 +42,12 @@ export const NavBar = () => {
             >
               Create Community
             </Link>
+            <Link
+    to="/myposts"
+    className="text-gray-300 hover:text-white transition-colors"
+  >
+    My Posts
+  </Link>
           </div>
 
           {/* Desktop Auth */}
@@ -136,6 +142,12 @@ export const NavBar = () => {
             >
               Create Community
             </Link>
+            <Link
+  to="/myposts"
+  className="text-gray-300 hover:text-white transition-colors"
+>
+  My Posts
+</Link>
           </div>
           <div className="border-t border-white/10 px-4 py-3">
   {user ? (
