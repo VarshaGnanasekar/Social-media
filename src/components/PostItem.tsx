@@ -23,9 +23,13 @@ export const PostItem = ({ post }: Props) => {
             ) : (
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex-shrink-0" />
             )}
-            <h3 className="text-lg font-bold text-gray-100 group-hover:text-white transition-colors">
-              {post.title}
-            </h3>
+            <div className="flex flex-col">
+  <h3 className="text-lg font-bold text-gray-100 group-hover:text-white transition-colors">
+    {post.title}
+  </h3>
+  <span className="text-sm text-gray-400">by {post.author}</span>
+</div>
+
           </div>
 
         
@@ -39,7 +43,7 @@ export const PostItem = ({ post }: Props) => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
 
-          {/* Stats and interactions */}
+       
           <div className="flex justify-center items-center mt-auto pt-3 border-t border-gray-800 gap-8">
             <span className="flex items-center text-gray-400 hover:text-pink-500 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,3 +63,4 @@ export const PostItem = ({ post }: Props) => {
     </div>
   );
 };
+

@@ -206,7 +206,7 @@ interface PostInput {
   community_id?: number | null;
 }
 
-const createPost = async (post: PostInput, imageFile: File, userId: string) => {
+const createPost = async (post: PostInput, imageFile: File, userId: string,author: string) => {
   const filePath = `${post.title}-${Date.now()}-${imageFile.name}`;
 
   const { error: uploadError } = await supabase.storage
@@ -225,6 +225,7 @@ const createPost = async (post: PostInput, imageFile: File, userId: string) => {
       ...post,
       image_url: publicURLData.publicUrl,
       user_id: userId,
+      author, 
     });
 
   if (error) throw new Error(error.message);
@@ -248,8 +249,8 @@ export const CreatePost = () => {
   });
 
   const { mutate, isPending, isError } = useMutation({
-    mutationFn: (data: { post: PostInput; imageFile: File; userId: string }) => {
-      return createPost(data.post, data.imageFile, data.userId);
+    mutationFn: (data: { post: PostInput; imageFile: File; userId: string;author: string; }) => {
+      return createPost(data.post, data.imageFile, data.userId,data.author);
     },
     onSuccess: () => {
       // ✅ Clear form
@@ -276,6 +277,7 @@ export const CreatePost = () => {
       },
       imageFile: selectedFile,
       userId: user.id,
+      author: user.user_metadata.user_name || "Anonymous",
     });
   };
 
