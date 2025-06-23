@@ -60,9 +60,12 @@ export const PostDetail = ({ postId }: Props) => {
   return (
     <article className="max-w-3xl mx-auto p-6 space-y-8">
       <header className="space-y-4">
-        <h1 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
+        <h2 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-pink-600 to-purple-500 bg-clip-text text-transparent">
+          {data?.author}
+        </h2>
+        <h3 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
           {data?.title}
-        </h1>
+        </h3>
         
         <div className="flex items-center justify-center space-x-2 text-gray-400">
           <span className="text-sm">
