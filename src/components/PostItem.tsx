@@ -25,9 +25,9 @@ export const PostItem = ({ post }: Props) => {
             )}
             <div className="flex flex-col">
   <h3 className="text-lg font-bold text-gray-100 group-hover:text-white transition-colors">
-    {post.title}
+    {post.author}
   </h3>
-  <span className="text-sm text-gray-400">by {post.author}</span>
+  <span className="text-sm text-gray-400">{post.title}</span>
 </div>
 
           </div>
