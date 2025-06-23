@@ -41,9 +41,9 @@ export const MyPosts = () => {
 
   return (
     <div>
-      <h2 className="text-6xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-        My Posts
-      </h2>
+      <h2 className="text-6xl font-bold mb-6 text-center font-mono bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
+  My Posts
+</h2>
       <div className="flex flex-wrap gap-6 justify-center">
       
       {data?.map((post) => (
