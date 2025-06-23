@@ -144,7 +144,7 @@ export const NavBar = () => {
             </Link>
             <Link
   to="/myposts"
-  className="text-gray-300 hover:text-white transition-colors"
+  className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
 >
   My Posts
 </Link>
