@@ -121,30 +121,35 @@ export const NavBar = () => {
             <Link
               to="/"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+              onClick={() => setMenuOpen(false)}
             >
               Home
             </Link>
             <Link
               to="/create"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+              onClick={() => setMenuOpen(false)}
             >
               Create Post
             </Link>
             <Link
               to="/communities"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+              onClick={() => setMenuOpen(false)}
             >
               Communities
             </Link>
             <Link
               to="/community/create"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+              onClick={() => setMenuOpen(false)}
             >
               Create Community
             </Link>
             <Link
   to="/myposts"
   className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+  onClick={() => setMenuOpen(false)}
 >
   My Posts
 </Link>
