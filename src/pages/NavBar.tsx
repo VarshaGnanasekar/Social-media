@@ -137,6 +137,36 @@ export const NavBar = () => {
               Create Community
             </Link>
           </div>
+          <div className="border-t border-white/10 px-4 py-3">
+  {user ? (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center space-x-2">
+        {user.user_metadata?.avatar_url && (
+          <img
+            src={user.user_metadata.avatar_url}
+            alt="User Avatar"
+            className="w-6 h-6 rounded-full object-cover"
+          />
+        )}
+        <span className="text-gray-300 text-sm">{displayName}</span>
+      </div>
+      <button
+        onClick={signOut}
+        className="bg-red-500 px-3 py-1 rounded text-sm"
+      >
+        Sign Out
+      </button>
+    </div>
+  ) : (
+    <button
+      onClick={signInWithGitHub}
+      className="w-full bg-blue-500 px-3 py-2 rounded text-white text-sm"
+    >
+      Sign in with GitHub
+    </button>
+  )}
+</div>
+
         </div>
       )}
     </nav>
