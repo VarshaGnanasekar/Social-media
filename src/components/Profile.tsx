@@ -24,7 +24,7 @@ export const Profile = () => {
         .from("posts")
         .select("community_id")
         .eq("user_id", userId)
-        .neq("community_id", null),
+        .not("community_id", "is", null) ,
     ]);
 
     if (postsRes.error || commentsRes.error || votesRes.error || communitiesRes.error)
@@ -42,7 +42,7 @@ export const Profile = () => {
       uniqueCommunities,
     };
   },
-  enabled: !!userId, // only run query if userId is available
+  enabled: !!userId,
 });
 
 
