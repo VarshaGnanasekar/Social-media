@@ -70,24 +70,33 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
   }, [selectedUser, user?.id]);
 
   const sendMessage = async () => {
-    if (!input.trim() || !user || !selectedUser || isSending) return;
-    
-    setIsSending(true);
-    const { error } = await supabase.from("messages").insert([
-      {
-        sender_id: user.id,
-        receiver_id: selectedUser.id,
-        content: input.trim(),
-      },
-    ]);
+  if (!input.trim() || !user || !selectedUser || isSending) return;
 
-    if (error) {
-      console.error("Send error:", error);
-    } else {
-      setInput("");
-    }
-    setIsSending(false);
+  setIsSending(true);
+
+  const newMessage = {
+    sender_id: user.id,
+    receiver_id: selectedUser.id,
+    content: input.trim(),
+    created_at: new Date().toISOString(), // Temporary timestamp
   };
+
+  const { data, error } = await supabase.from("messages").insert([
+    {
+      ...newMessage,
+    },
+  ]).select(); // important to fetch back the inserted message with ID
+
+  if (error) {
+    console.error("Send error:", error);
+  } else if (data && data.length > 0) {
+    setMessages(prev => [...prev, data[0]]);
+    setInput("");
+  }
+
+  setIsSending(false);
+};
+
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
