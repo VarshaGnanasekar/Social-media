@@ -208,6 +208,12 @@ useEffect(() => {
 >
   My Posts
 </Link>
+ <Link
+  to="/messages"
+  className="text-gray-300 hover:text-white transition-colors"
+>
+  Messages
+</Link>
           </div>
           <div className="border-t border-white/10 px-4 py-3">
   {user ? (
