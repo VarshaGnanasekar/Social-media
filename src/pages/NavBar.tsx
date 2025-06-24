@@ -95,6 +95,12 @@ useEffect(() => {
   >
     My Posts
   </Link>
+  <Link
+  to="/messages"
+  className="text-gray-300 hover:text-white transition-colors"
+>
+  Messages
+</Link>
           </div>
 
           {/* Desktop Auth */}

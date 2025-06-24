@@ -7,7 +7,8 @@ import { CreateCommunityPage } from "./pages/CreateCommunityPage";
 import { CommunitiesPage } from "./pages/CommunitiesPage";
 import { CommunityPage } from "./components/CommunityPage";
 import { MyPosts } from "./components/MyPosts";
-import {Profile} from "./components/Profile"
+import {Profile} from "./components/Profile";
+import MessagingPage from "./components/MessagingPage";
 
 
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/community/:id" element={<CommunityPage />} />
           <Route path="/myposts" element={<MyPosts />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/messages" element={<MessagingPage />} />
 
 
         </Routes>
