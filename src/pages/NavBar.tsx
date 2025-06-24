@@ -29,6 +29,8 @@ useEffect(() => {
 
       // If profile doesn't exist, create one
       if (!existingProfile) {
+        console.log("entered this oneee");
+        
         const { error: insertError } = await supabase
           .from('profiles')
           .insert({
