@@ -10,52 +10,47 @@ export const NavBar = () => {
 
 
 
-  useEffect(() => {
-    const createProfileIfMissing = async () => {
-      if (!user || profileLoading) return;
+useEffect(() => {
+  const createProfileIfMissing = async () => {
+    if (!user) return;
 
-      try {
-        setProfileLoading(true);
-        
-        // First check if profile exists
-        const { data: existingProfile, error: fetchError } = await supabase
-          .from("profiles")
-          .select("id")
-          .eq("id", user.id)
-          .maybeSingle(); // Use maybeSingle instead of single
+    try {
+      // First check if profile exists
+      const { data: existingProfile, error: fetchError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', user.id)
+        .maybeSingle(); // Better than single() for this case
 
-        if (fetchError) {
-          console.error("Error checking profile:", fetchError.message);
-          return;
-        }
-
-        // If profile doesn't exist, create one
-        if (!existingProfile) {
-          const { error: insertError } = await supabase
-            .from("profiles")
-            .insert({
-              id: user.id,
-              user_name: user.user_metadata.user_name || user.email?.split('@')[0] || 'user',
-              avatar_url: user.user_metadata.avatar_url || "",
-              email: user.email || "",
-              updated_at: new Date().toISOString(),
-            });
-
-          if (insertError) {
-            console.error("Error creating profile:", insertError.message);
-          } else {
-            console.log("Profile created successfully");
-          }
-        }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-      } finally {
-        setProfileLoading(false);
+      if (fetchError) {
+        console.error('Error checking profile:', fetchError);
+        return;
       }
-    };
 
-    createProfileIfMissing();
-  }, [user]); // Only run when user changes
+      // If profile doesn't exist, create one
+      if (!existingProfile) {
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert({
+            id: user.id,
+            user_name: user.user_metadata.user_name || user.email?.split('@')[0] || 'user',
+            avatar_url: user.user_metadata.avatar_url || '',
+            email: user.email || '',
+            updated_at: new Date().toISOString()
+          })
+          .select(); // Add .select() to get proper response format
+
+        if (insertError) {
+          console.error('Error creating profile:', insertError);
+        }
+      }
+    } catch (err) {
+      console.error('Unexpected error:', err);
+    }
+  };
+
+  createProfileIfMissing();
+}, [user]);
 
 
   const displayName = user?.user_metadata.user_name || user?.email;
