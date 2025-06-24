@@ -55,11 +55,13 @@ export const NavBar = () => {
             {user ? (
               <div className="flex items-center space-x-4">
                 {user.user_metadata?.avatar_url && (
+                  <Link to="/profile">
                   <img
                     src={user.user_metadata.avatar_url}
                     alt="User Avatar"
                     className="w-8 h-8 rounded-full object-cover"
                   />
+                  </Link>
                 )}
                 <span className="text-gray-300">{displayName}</span>
                 <button
