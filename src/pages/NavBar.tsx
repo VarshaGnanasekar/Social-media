@@ -20,7 +20,7 @@ useEffect(() => {
         .from('profiles')
         .select('id')
         .eq('id', user.id)
-        .maybeSingle(); // Better than single() for this case
+
 
       if (fetchError) {
         console.error('Error checking profile:', fetchError);
