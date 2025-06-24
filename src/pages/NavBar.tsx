@@ -36,8 +36,7 @@ useEffect(() => {
             id: user.id,
             user_name: user.user_metadata.user_name || user.email?.split('@')[0] || 'user',
             avatar_url: user.user_metadata.avatar_url || '',
-            email: user.email || '',
-            updated_at: new Date().toISOString()
+            created_at: new Date().toISOString()
           })
           .select(); // Add .select() to get proper response format
 
