@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
+import { useAuth } from "../context/AuthContext"; // 👈 import AuthContext
 
 type Profile = {
   id: string;
@@ -14,6 +15,7 @@ interface UserListProps {
 export const UserList: React.FC<UserListProps> = ({ onSelectUser }) => {
   const [users, setUsers] = useState<Profile[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { user } = useAuth(); // 👈 get current user
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -24,14 +26,16 @@ export const UserList: React.FC<UserListProps> = ({ onSelectUser }) => {
       if (error) {
         console.error("Error fetching users:", error);
       } else {
-        setUsers(data || []);
+        // 👇 filter out current user
+        const filtered = data?.filter((u) => u.id !== user?.id) || [];
+        setUsers(filtered);
       }
 
       setLoading(false);
     };
 
     fetchUsers();
-  }, []);
+  }, [user]);
 
   if (loading) return <p className="text-white">Loading users...</p>;
 
