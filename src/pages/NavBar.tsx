@@ -19,6 +19,7 @@ useEffect(() => {
         .from('profiles')
         .select('id')
         .eq('id', user.id)
+        .maybeSingle();
 
 
       if (fetchError) {
@@ -27,7 +28,7 @@ useEffect(() => {
       }
 
       // If profile doesn't exist, create one
-      if (!existingProfile || existingProfile.length === 0) {
+      if (!existingProfile) {
         console.log("entered this oneee");
         
         const { error: insertError } = await supabase
