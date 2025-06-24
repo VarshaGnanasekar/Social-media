@@ -1,11 +1,38 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { supabase } from "../supabase-client";
 import { useAuth } from "../context/AuthContext";
 
 export const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { signInWithGitHub, signOut, user } = useAuth();
+
+  useEffect(() => {
+  const createProfileIfMissing = async () => {
+    if (!user) return;
+
+    const { data: existingProfile, error: fetchError } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("id", user.id)
+      .single();
+
+    if (!existingProfile && !fetchError) {
+      const { error: insertError } = await supabase.from("profiles").insert({
+        id: user.id,
+        user_name: user.user_metadata.user_name || user.email,
+        avatar_url: user.user_metadata.avatar_url || "",
+      });
+
+      if (insertError) {
+        console.error("Error creating profile:", insertError.message);
+      }
+    }
+  };
+
+  createProfileIfMissing();
+}, [user]);
+
 
   const displayName = user?.user_metadata.user_name || user?.email;
   return (
