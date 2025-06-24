@@ -166,6 +166,7 @@ export const NavBar = () => {
                     src={user.user_metadata.avatar_url}
                     alt="User Avatar"
                     className="w-8 h-8 rounded-full object-cover"
+                     onClick={() => setMenuOpen(false)}
                   />
                   </Link>
         )}
