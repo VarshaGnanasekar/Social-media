@@ -5,34 +5,57 @@ import { useAuth } from "../context/AuthContext";
 
 export const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileLoading, setProfileLoading] = useState(false);
   const { signInWithGitHub, signOut, user } = useAuth();
 
+
+
   useEffect(() => {
-  const createProfileIfMissing = async () => {
-    if (!user) return;
+    const createProfileIfMissing = async () => {
+      if (!user || profileLoading) return;
 
-    const { data: existingProfile, error: fetchError } = await supabase
-      .from("profiles")
-      .select("id")
-      .eq("id", user.id)
-      .single();
+      try {
+        setProfileLoading(true);
+        
+        // First check if profile exists
+        const { data: existingProfile, error: fetchError } = await supabase
+          .from("profiles")
+          .select("id")
+          .eq("id", user.id)
+          .maybeSingle(); // Use maybeSingle instead of single
 
-    if (!existingProfile && !fetchError) {
-      const { error: insertError } = await supabase.from("profiles").insert({
-        id: user.id,
-        user_name: user.user_metadata.user_name || user.email,
-        avatar_url: user.user_metadata.avatar_url || "",
-      });
+        if (fetchError) {
+          console.error("Error checking profile:", fetchError.message);
+          return;
+        }
 
-      if (insertError) {
-        console.error("Error creating profile:", insertError.message);
+        // If profile doesn't exist, create one
+        if (!existingProfile) {
+          const { error: insertError } = await supabase
+            .from("profiles")
+            .insert({
+              id: user.id,
+              user_name: user.user_metadata.user_name || user.email?.split('@')[0] || 'user',
+              avatar_url: user.user_metadata.avatar_url || "",
+              email: user.email || "",
+              updated_at: new Date().toISOString(),
+            });
+
+          if (insertError) {
+            console.error("Error creating profile:", insertError.message);
+          } else {
+            console.log("Profile created successfully");
+          }
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+      } finally {
+        setProfileLoading(false);
       }
-    }
-  };
+    };
 
-  createProfileIfMissing();
-}, [user]);
-
+    createProfileIfMissing();
+  }, [user]); // Only run when user changes
 
 
   const displayName = user?.user_metadata.user_name || user?.email;
