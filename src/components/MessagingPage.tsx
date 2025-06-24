@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserList } from "./userList";
+import { UserList } from "../pages/UserList";
 import { ChatBox } from "./chatBox";
 
 interface Profile {
