@@ -5,7 +5,6 @@ import { useAuth } from "../context/AuthContext";
 
 export const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [profileLoading, setProfileLoading] = useState(false);
   const { signInWithGitHub, signOut, user } = useAuth();
 
 
