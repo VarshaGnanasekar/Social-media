@@ -161,11 +161,13 @@ export const NavBar = () => {
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-2">
         {user.user_metadata?.avatar_url && (
-          <img
-            src={user.user_metadata.avatar_url}
-            alt="User Avatar"
-            className="w-6 h-6 rounded-full object-cover"
-          />
+          <Link to="/profile">
+                  <img
+                    src={user.user_metadata.avatar_url}
+                    alt="User Avatar"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  </Link>
         )}
         <span className="text-gray-300 text-sm">{displayName}</span>
       </div>
