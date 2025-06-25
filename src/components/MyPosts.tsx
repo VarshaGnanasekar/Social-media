@@ -42,9 +42,11 @@ export const MyPosts = () => {
 
   return (
     <div>
-      <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-400 mb-4">
-            My Posts
-      </h1>
+      <div className="flex items-center justify-center min-h-screen">
+  <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-400 mb-4">
+    My Posts
+  </h1>
+</div>
       <div className="flex flex-wrap gap-6 justify-center">
       
       {data?.map((post) => (
