@@ -228,7 +228,14 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabase-client";
 import { useAuth } from "../context/AuthContext";
-import { type Community, fetchCommunities } from "./CommunityList";
+
+interface Community {
+  id: number;
+  name: string;
+  description: string;
+  created_at: string;
+  avatar_url: string | null;
+}
 
 interface PostInput {
   title: string;
@@ -237,30 +244,48 @@ interface PostInput {
   community_id?: number | null;
 }
 
-const createPost = async (post: PostInput, imageFile: File, userId: string, author: string) => {
+const fetchCommunities = async (): Promise<Community[]> => {
+  const { data, error } = await supabase
+    .from("communities")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return data;
+};
+
+const createPost = async (
+  post: PostInput,
+  imageFile: File,
+  userId: string,
+  author: string
+) => {
   const filePath = `${post.title}-${Date.now()}-${imageFile.name}`;
 
+  // Upload image to storage
   const { error: uploadError } = await supabase.storage
     .from("post-images")
     .upload(filePath, imageFile);
 
   if (uploadError) throw new Error(uploadError.message);
 
+  // Get public URL for the uploaded image
   const { data: publicURLData } = supabase.storage
     .from("post-images")
     .getPublicUrl(filePath);
 
+  // Create post record in database
   const { data, error } = await supabase
     .from("posts")
     .insert({
       ...post,
       image_url: publicURLData.publicUrl,
       user_id: userId,
-      author, 
-    });
+      author,
+    })
+    .select();
 
   if (error) throw new Error(error.message);
-
   return data;
 };
 
@@ -280,7 +305,12 @@ export const CreatePost = () => {
   });
 
   const { mutate, isPending, isError, error } = useMutation({
-    mutationFn: (data: { post: PostInput; imageFile: File; userId: string; author: string }) => {
+    mutationFn: (data: {
+      post: PostInput;
+      imageFile: File;
+      userId: string;
+      author: string;
+    }) => {
       return createPost(data.post, data.imageFile, data.userId, data.author);
     },
     onSuccess: () => {
@@ -325,153 +355,179 @@ export const CreatePost = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl overflow-hidden border border-gray-700">
-        <div className="p-8">
-          <div className="flex items-center mb-8">
-            <svg className="w-8 h-8 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-            </svg>
-            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
-              Create New Post
-            </h2>
-          </div>
+    <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Creative Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300 mb-4">
+            Share Your Story
+          </h1>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            Craft your post with images, text, and personality
+          </p>
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-1">
-              <label htmlFor="title" className="block text-sm font-medium text-gray-300">
-                Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                placeholder="What's your post about?"
-                required
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label htmlFor="content" className="block text-sm font-medium text-gray-300">
-                Content
-              </label>
-              <textarea
-                id="content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all min-h-[150px]"
-                placeholder="Share your thoughts..."
-                required
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label htmlFor="community" className="block text-sm font-medium text-gray-300">
-                Community (optional)
-              </label>
-              <select 
-                id="community" 
-                onChange={handleCommunityChange}
-                value={communityId ?? ""}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-              >
-                <option value="">-- Choose a Community --</option>
-                {communities?.map((community) => (
-                  <option key={community.id} value={community.id}>
-                    {community.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">
-                Featured Image
-              </label>
-              <div className="flex flex-col items-center justify-center w-full">
-                <label className="flex flex-col w-full rounded-xl cursor-pointer group">
-                  <div className={`flex flex-col items-center justify-center pt-5 pb-6 border-2 border-dashed rounded-xl transition-all ${imagePreviewUrl ? 'border-transparent' : 'border-gray-700 group-hover:border-purple-500'} bg-gray-800 group-hover:bg-gray-750`}>
-                    {imagePreviewUrl ? (
-                      <div className="relative w-full">
-                        <img
-                          src={imagePreviewUrl}
-                          alt="Preview"
-                          className="w-full h-64 object-cover rounded-lg mb-4"
-                        />
-                        <div className="absolute top-2 right-2 bg-black bg-opacity-50 rounded-full p-1.5">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                          </svg>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <svg className="w-12 h-12 mb-4 text-gray-500 group-hover:text-purple-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        <p className="mb-2 text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-                          <span className="font-semibold">Click to upload</span> or drag and drop
-                        </p>
-                        <p className="text-xs text-gray-500 group-hover:text-gray-400 transition-colors">
-                          PNG, JPG, GIF (MAX. 10MB)
-                        </p>
-                      </>
-                    )}
+        {/* Two-column layout */}
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left side - Preview */}
+          <div className="lg:w-2/5">
+            <div className="sticky top-8">
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700 shadow-2xl">
+                <h3 className="text-xl font-bold text-white mb-4">Live Preview</h3>
+                
+                {imagePreviewUrl ? (
+                  <div className="mb-6 overflow-hidden rounded-xl">
+                    <img 
+                      src={imagePreviewUrl} 
+                      alt="Preview" 
+                      className="w-full h-64 object-cover transition-all duration-300 hover:scale-105"
+                    />
                   </div>
-                  <input 
-                    id="image" 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={handleFileChange} 
-                    className="hidden" 
-                    required
-                  />
-                </label>
-              </div>
-            </div>
+                ) : (
+                  <div className="h-64 bg-gray-700 rounded-xl flex items-center justify-center mb-6">
+                    <div className="text-center p-4">
+                      <svg className="w-12 h-12 mx-auto text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      </svg>
+                      <p className="mt-2 text-gray-400">Your image will appear here</p>
+                    </div>
+                  </div>
+                )}
 
-            {isError && (
-              <div className="bg-red-900/30 border border-red-700 rounded-lg p-4">
-                <div className="flex items-center text-red-400">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <span className="font-medium">{error?.message || "Error creating post. Please try again."}</span>
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-white">
+                    {title || "Your post title"}
+                  </h4>
+                  <p className="text-gray-300 whitespace-pre-line">
+                    {content || "Start typing your content and it will appear here..."}
+                  </p>
                 </div>
               </div>
-            )}
-
-            <div className="flex justify-end pt-4">
-              <button
-                type="submit"
-                disabled={isPending || !selectedFile}
-                className={`px-8 py-3 rounded-xl font-medium text-white transition-all flex items-center ${
-                  isPending || !selectedFile
-                    ? 'bg-purple-800 cursor-not-allowed opacity-80' 
-                    : 'bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 shadow-lg hover:shadow-purple-500/20'
-                }`}
-              >
-                {isPending ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Creating...
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    Publish Post
-                  </>
-                )}
-              </button>
             </div>
-          </form>
+          </div>
+
+          {/* Right side - Creation area */}
+          <div className="lg:w-3/5">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Image upload card */}
+              <div 
+                onClick={() => document.getElementById('image')?.click()}
+                className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${imagePreviewUrl ? 'border-transparent' : 'border-gray-700 hover:border-purple-500'} bg-gray-800 hover:bg-gray-750`}
+              >
+                <input 
+                  id="image" 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleFileChange} 
+                  className="hidden" 
+                  required
+                />
+                <div className="flex flex-col items-center justify-center">
+                  <svg className="w-14 h-14 text-purple-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    {imagePreviewUrl ? 'Change Image' : 'Upload Featured Image'}
+                  </h3>
+                  <p className="text-gray-400 max-w-md mx-auto">
+                    {imagePreviewUrl 
+                      ? 'Click to select a different image' 
+                      : 'Drag & drop or click to browse (Recommended size: 1200x630)'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Title input */}
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Headline
+                </label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent text-xl font-medium"
+                  placeholder="Catchy title that grabs attention..."
+                  required
+                />
+              </div>
+
+              {/* Content editor */}
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Your Story
+                </label>
+                <textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent min-h-[200px]"
+                  placeholder="Write your content here... (Markdown supported)"
+                  required
+                />
+              </div>
+
+              {/* Community selector */}
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Add to Community (optional)
+                </label>
+                <select 
+                  onChange={handleCommunityChange}
+                  value={communityId ?? ""}
+                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  <option value="">-- Select Community --</option>
+                  {communities?.map((community) => (
+                    <option key={community.id} value={community.id}>
+                      {community.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Error message */}
+              {isError && (
+                <div className="bg-red-900/30 border border-red-700 rounded-lg p-4">
+                  <div className="flex items-center text-red-400">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span className="font-medium">{error?.message || "Error creating post. Please try again."}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Publish button */}
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  disabled={isPending || !selectedFile}
+                  className={`px-8 py-4 rounded-xl font-bold text-white transition-all flex items-center ${
+                    isPending || !selectedFile
+                      ? 'bg-gray-700 cursor-not-allowed opacity-80' 
+                      : 'bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 shadow-lg hover:shadow-purple-500/30'
+                  }`}
+                >
+                  {isPending ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Publishing...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                      </svg>
+                      Publish Now
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
