@@ -476,7 +476,7 @@ export const CreatePost = () => {
                   value={communityId ?? ""}
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
-                  <option value="">-- Select Community --</option>
+                  <option value="">Select Community</option>
                   {communities?.map((community) => (
                     <option key={community.id} value={community.id}>
                       {community.name}
