@@ -81,13 +81,9 @@ export const MyPosts = () => {
 
   return (
     <div className="pb-12 px-4">
-      <motion.h2
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-4xl md:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent"
-      >
-        My Posts
-      </motion.h2>
+      <h2 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+        My posts
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
         {data?.map((post) => (
