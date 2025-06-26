@@ -67,8 +67,10 @@ export const FollowUsersPage = () => {
   );
 
   return (
-    <div className="max-w-2xl mx-auto mt-8 p-6 bg-gray-900 rounded-xl shadow-2xl text-white">
-      <h1 className="text-2xl font-bold mb-6 text-center">Discover Users</h1>
+    <div className="max-w-xl mx-auto mt-10 px-4">
+      <h1 className="text-xl font-semibold text-white mb-4 text-center">
+        Discover & Follow Users
+      </h1>
 
       <div className="relative mb-6">
         <input
@@ -76,10 +78,10 @@ export const FollowUsersPage = () => {
           placeholder="Search users..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-3 pl-10 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 rounded-md bg-[#1f1f1f] text-white border border-[#333] focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <svg
-          className="absolute left-3 top-3.5 h-5 w-5 text-gray-400"
+          className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -95,83 +97,48 @@ export const FollowUsersPage = () => {
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
-        </div>
+        <div className="text-center text-gray-400">Loading users...</div>
       ) : filteredUsers.length === 0 ? (
-        <div className="text-center py-6 text-gray-400">
-          <svg
-            className="mx-auto h-12 w-12 text-gray-500"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1}
-              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-            />
-          </svg>
-          <p className="mt-2 text-lg">No users found</p>
-          <p className="text-sm">Try a different search term</p>
-        </div>
+        <div className="text-center text-gray-500">No users found.</div>
       ) : (
         <ul className="space-y-3">
           {filteredUsers.map((u) => (
             <li
               key={u.id}
-              className="p-4 bg-gray-800 rounded-lg hover:bg-gray-750 transition-colors duration-200"
+              className="flex items-center justify-between bg-[#1c1c1c] border border-[#2a2a2a] rounded-lg px-4 py-3 hover:border-blue-500 transition-all"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  {u.avatar_url ? (
-                    <img
-                      src={u.avatar_url}
-                      alt="avatar"
-                      className="w-12 h-12 rounded-full object-cover border-2 border-gray-700"
-                    />
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center text-white font-bold text-xl">
-                      {u.user_name[0]?.toUpperCase()}
-                    </div>
-                  )}
-                  <span className="font-medium text-lg">{u.user_name}</span>
-                </div>
-
-                {!followingIds.includes(u.id) ? (
-                  <button
-                    onClick={() => handleFollow(u.id)}
-                    disabled={isFollowing}
-                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                      isFollowing
-                        ? "bg-gray-600 cursor-not-allowed"
-                        : "bg-blue-600 hover:bg-blue-700"
-                    }`}
-                  >
-                    {isFollowing ? "Processing..." : "Follow"}
-                  </button>
+              <div className="flex items-center space-x-3">
+                {u.avatar_url ? (
+                  <img
+                    src={u.avatar_url}
+                    alt="avatar"
+                    className="w-9 h-9 rounded-full object-cover"
+                  />
                 ) : (
-                  <span className="px-5 py-2 rounded-full text-sm font-medium bg-green-600/20 text-green-400 flex items-center">
-                    <svg
-                      className="w-4 h-4 mr-1"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    Following
-                  </span>
+                  <div className="w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm font-semibold">
+                    {u.user_name[0]?.toUpperCase()}
+                  </div>
                 )}
+                <span className="text-sm text-white font-medium">
+                  {u.user_name}
+                </span>
               </div>
+
+              {!followingIds.includes(u.id) ? (
+                <button
+                  onClick={() => handleFollow(u.id)}
+                  disabled={isFollowing}
+                  className={`text-xs px-3 py-1.5 rounded-md font-medium transition-all ${
+                    isFollowing
+                      ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                  }`}
+                >
+                  {isFollowing ? "..." : "Follow"}
+                </button>
+              ) : (
+                <span className="text-xs text-green-400">Following</span>
+              )}
             </li>
           ))}
         </ul>
