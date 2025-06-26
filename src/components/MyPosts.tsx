@@ -81,7 +81,7 @@ export const MyPosts = () => {
 
   return (
     <div className="pb-12 px-4">
-      <h2 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+      <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
         My posts
       </h2>
 
