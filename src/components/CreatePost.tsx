@@ -131,16 +131,13 @@ export const CreatePost = () => {
 
   return (
     <div className="min-h-screen bg-black py-12 px-4 sm:px-6 lg:px-8">
+      <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+        Create New Posts
+      </h2>
+
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-400 mb-4">
-            Create Your Post
-          </h1>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Craft something amazing that stands out in the darkness
-          </p>
-        </div>
+        
 
         {/* Main content */}
         <div className="flex flex-col lg:flex-row gap-8">
