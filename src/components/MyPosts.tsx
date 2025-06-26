@@ -84,7 +84,7 @@ export const MyPosts = () => {
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-5xl md:text-6xl font-bold mb-12 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent"
+        className="text-4xl md:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent"
       >
         My Posts
       </motion.h2>
