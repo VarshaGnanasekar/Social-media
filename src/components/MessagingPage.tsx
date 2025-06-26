@@ -47,7 +47,7 @@ export default function MessagingPage() {
   );
 
   return (
-    <div className="flex flex-col h-screen bg-black overflow-hidden">
+    <div className="flex flex-col h-screen bg-black overflow-hidden max-w-xl mx-auto mt-10 px-4">
       {/* Show user list when no user is selected */}
       {!selectedUser ? (
         <div className="flex flex-col w-full h-full">
