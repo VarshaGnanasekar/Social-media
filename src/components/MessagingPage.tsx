@@ -1,7 +1,6 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { ChatBox } from "./chatBox";
-import { MessageSquare, ArrowLeft, Search} from 'lucide-react';
+import { MessageSquare, ArrowLeft, Search } from 'lucide-react';
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../supabase-client";
 
@@ -17,33 +16,32 @@ export default function MessagingPage() {
   const [selectedUser, setSelectedUser] = useState<Profile | null>(null);
   const [showUserList, setShowUserList] = useState(true);
   const [users, setUsers] = useState<Profile[]>([]);
-  const [followingIds, setFollowingIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const fetchUsersAndFollows = async () => {
+  const fetchUsers = async () => {
     setLoading(true);
 
-    const { data: userData, error: userError } = await supabase
+    const { data: userData, error } = await supabase
       .from("profiles")
       .select("id, user_name, avatar_url")
       .neq("id", user?.id)
       .order("user_name", { ascending: true });
 
-    const { data: followData, error: followError } = await supabase
-      .from("follows")
-      .select("following_id")
-      .eq("follower_id", user?.id);
-
-    if (userError || followError) {
-      console.error("Error loading data:", userError || followError);
+    if (error) {
+      console.error("Error loading users:", error);
     } else {
       setUsers(userData || []);
-      setFollowingIds(followData?.map((f) => f.following_id) || []);
     }
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (user?.id) {
+      fetchUsers();
+    }
+  }, [user?.id]);
 
   const filteredUsers = users.filter((u) =>
     u.user_name.toLowerCase().includes(searchQuery.toLowerCase())
