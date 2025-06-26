@@ -52,7 +52,7 @@ export default function MessagingPage() {
       {!selectedUser ? (
         <div className="flex flex-col w-full h-full">
 <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
-        Get to know each others
+        Get to know each other
       </h2>
           
           {/* Search bar */}
