@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
 import { useAuth } from "../context/AuthContext";
+import { ArrowLeft, Send, MessageSquare } from 'lucide-react';
 
 type Profile = {
   id: string;
@@ -64,7 +65,6 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
         if ((newMessage.sender_id === selectedUser.id && newMessage.receiver_id === user?.id) ||
             (newMessage.sender_id === user?.id && newMessage.receiver_id === selectedUser.id)) {
           setMessages(prev => [...prev, newMessage]);
-          // Auto-scroll only if already at bottom
           if (!isScrolled) {
             setTimeout(() => {
               scrollToBottom();
@@ -134,9 +134,9 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gray-900">
+    <div className="flex flex-col h-full bg-black">
       {/* Chat header */}
-      <div className="bg-gray-800 p-3 flex items-center border-b border-gray-700 sticky top-0 z-10">
+      <div className="bg-[#0a0a0a] p-3 flex items-center border-b border-[#222] sticky top-0 z-10">
         <div className="flex items-center">
           {selectedUser.avatar_url ? (
             <img
@@ -145,7 +145,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
               className="w-9 h-9 rounded-full object-cover"
             />
           ) : (
-            <div className="w-9 h-9 rounded-full bg-gray-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-full bg-[#333] flex items-center justify-center">
               <span className="text-white text-lg">
                 {selectedUser.user_name.charAt(0).toUpperCase()}
               </span>
@@ -167,14 +167,12 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
       <div 
         id="messages-container"
         onScroll={handleScroll}
-        className="flex-1 p-4 overflow-y-auto bg-gray-900 bg-opacity-90"
+        className="flex-1 p-4 overflow-y-auto bg-black"
       >
         <div className="space-y-2">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-400">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
+              <MessageSquare className="h-12 w-12 mb-3" />
               <p>No messages yet</p>
               <p className="text-sm mt-1">Send your first message to {selectedUser.user_name}</p>
             </div>
@@ -187,7 +185,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
                 <div
                   className={`max-w-[80%] px-3 py-2 rounded-lg ${msg.sender_id === user?.id
                     ? 'bg-blue-600 text-white rounded-tr-none'
-                    : 'bg-gray-700 text-white rounded-tl-none'
+                    : 'bg-[#111] text-white rounded-tl-none'
                     }`}
                 >
                   <p className="text-sm break-words">{msg.content}</p>
@@ -205,13 +203,13 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
       </div>
 
       {/* Input area */}
-      <div className="p-3 bg-gray-800 border-t border-gray-700 sticky bottom-0">
+      <div className="p-3 bg-[#0a0a0a] border-t border-[#222] sticky bottom-0">
         <div className="flex items-center">
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="flex-1 rounded-lg p-3 bg-gray-700 text-white outline-none placeholder-gray-400 resize-none"
+            className="flex-1 rounded-lg p-3 bg-[#111] text-white outline-none placeholder-gray-400 resize-none"
             placeholder="Type a message..."
             disabled={isSending}
             rows={1}
@@ -226,16 +224,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
               } transition-colors`}
             aria-label="Send message"
           >
-            {isSending ? (
-              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clipRule="evenodd" />
-              </svg>
-            )}
+            <Send className="h-5 w-5" />
           </button>
         </div>
       </div>

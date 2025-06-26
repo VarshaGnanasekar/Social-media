@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { UserList } from "../pages/UserList";
+
 import { ChatBox } from "./chatBox";
+import { MessageSquare, ArrowLeft, Search, Send } from 'lucide-react';
+import { useAuth } from "../context/AuthContext";
+import { supabase } from "../supabase-client";
 
 interface Profile {
   id: string;
@@ -10,21 +13,52 @@ interface Profile {
 }
 
 export default function MessagingPage() {
+  const { user } = useAuth();
   const [selectedUser, setSelectedUser] = useState<Profile | null>(null);
   const [showUserList, setShowUserList] = useState(true);
+  const [users, setUsers] = useState<Profile[]>([]);
+  const [followingIds, setFollowingIds] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const fetchUsersAndFollows = async () => {
+    setLoading(true);
+
+    const { data: userData, error: userError } = await supabase
+      .from("profiles")
+      .select("id, user_name, avatar_url")
+      .neq("id", user?.id)
+      .order("user_name", { ascending: true });
+
+    const { data: followData, error: followError } = await supabase
+      .from("follows")
+      .select("following_id")
+      .eq("follower_id", user?.id);
+
+    if (userError || followError) {
+      console.error("Error loading data:", userError || followError);
+    } else {
+      setUsers(userData || []);
+      setFollowingIds(followData?.map((f) => f.following_id) || []);
+    }
+
+    setLoading(false);
+  };
+
+  const filteredUsers = users.filter((u) =>
+    u.user_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gray-900 overflow-hidden">
+    <div className="flex flex-col md:flex-row h-screen bg-black overflow-hidden">
       {/* Mobile header when chat is open */}
       {!showUserList && selectedUser && (
-        <div className="md:hidden flex items-center p-3 bg-gray-800 border-b border-gray-700">
+        <div className="md:hidden flex items-center p-3 bg-[#0a0a0a] border-b border-[#222]">
           <button 
             onClick={() => setShowUserList(true)}
-            className="mr-3 p-1 rounded-full hover:bg-gray-700"
+            className="mr-3 p-1 rounded-full hover:bg-[#222]"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+            <ArrowLeft className="h-5 w-5 text-white" />
           </button>
           <div className="flex items-center">
             {selectedUser.avatar_url ? (
@@ -34,7 +68,7 @@ export default function MessagingPage() {
                 className="w-8 h-8 rounded-full object-cover mr-2"
               />
             ) : (
-              <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center mr-2">
+              <div className="w-8 h-8 rounded-full bg-[#333] flex items-center justify-center mr-2">
                 <span className="text-white text-sm">
                   {selectedUser.user_name.charAt(0).toUpperCase()}
                 </span>
@@ -46,35 +80,77 @@ export default function MessagingPage() {
       )}
 
       {/* Sidebar for User List - shown conditionally on mobile */}
-      <div className={`${showUserList ? 'flex' : 'hidden'} md:flex w-full md:w-80 flex-col border-b md:border-b-0 md:border-r border-gray-700 h-full`}>
-        <div className="p-3 border-b border-gray-700 flex items-center justify-between">
+      <div className={`${showUserList ? 'flex' : 'hidden'} md:flex w-full md:w-80 flex-col border-b md:border-b-0 md:border-r border-[#222] h-full`}>
+        <div className="p-3 border-b border-[#222] flex items-center justify-between">
           <h1 className="text-xl font-bold text-white">Messages</h1>
-          <button className="md:hidden p-1 rounded-full hover:bg-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-            </svg>
+          <button className="md:hidden p-1 rounded-full hover:bg-[#222]">
+            <Search className="h-5 w-5 text-white" />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto">
-          <UserList 
-            onSelectUser={(user) => {
-              setSelectedUser(user);
-              setShowUserList(false);
-            }} 
+        
+        <div className="relative px-3 py-2 border-b border-[#222]">
+          <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+            <Search className="h-4 w-4 text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-3 py-2 rounded-md bg-[#111] text-white border border-[#222] focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
+        </div>
+        
+        <div className="flex-1 overflow-y-auto bg-black">
+          {loading ? (
+            <div className="text-center text-gray-400 py-4">Loading users...</div>
+          ) : filteredUsers.length === 0 ? (
+            <div className="text-center text-gray-500 py-4">No users found.</div>
+          ) : (
+            <ul className="divide-y divide-[#222]">
+              {filteredUsers.map((u) => (
+                <li
+                  key={u.id}
+                  className="flex items-center justify-between bg-[#0a0a0a] hover:bg-[#111] transition-colors px-4 py-3 cursor-pointer"
+                  onClick={() => {
+                    setSelectedUser(u);
+                    setShowUserList(false);
+                  }}
+                >
+                  <div className="flex items-center space-x-3">
+                    {u.avatar_url ? (
+                      <img
+                        src={u.avatar_url}
+                        alt="avatar"
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-[#333] flex items-center justify-center text-white text-sm font-semibold">
+                        {u.user_name[0]?.toUpperCase()}
+                      </div>
+                    )}
+                    <span className="text-sm text-white font-medium">
+                      {u.user_name}
+                    </span>
+                  </div>
+                  <button className="p-2 rounded-full hover:bg-[#222] text-gray-400 hover:text-blue-400">
+                    <MessageSquare className="h-4 w-4" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 
       {/* Chat Area */}
-      <div className={`${!showUserList ? 'flex' : 'hidden'} md:flex flex-1 flex-col h-full`}>
+      <div className={`${!showUserList ? 'flex' : 'hidden'} md:flex flex-1 flex-col h-full bg-black`}>
         {selectedUser ? (
           <ChatBox selectedUser={selectedUser} />
         ) : (
-          <div className="flex flex-col items-center justify-center h-full text-center p-4">
+          <div className="flex flex-col items-center justify-center h-full text-center p-4 bg-black">
             <div className="max-w-md">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-gray-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
+              <MessageSquare className="h-16 w-16 mx-auto text-gray-500 mb-4" />
               <h2 className="text-xl font-medium text-white mb-2">No conversation selected</h2>
               <p className="text-gray-400 mb-6">Select a user from the sidebar to start chatting</p>
               <button 
