@@ -34,7 +34,7 @@ export const CreateCommunity = () => {
   };
   return (
     <div>
-    <h2 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+    <h2 className="text-4xl sm:2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
         Create New Community
       </h2>
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-4">

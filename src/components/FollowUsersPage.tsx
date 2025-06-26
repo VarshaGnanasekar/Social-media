@@ -67,10 +67,12 @@ export const FollowUsersPage = () => {
   );
 
   return (
+    <div>
+    <h2 className="text-4xl sm:2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+        Discover and Follow users
+      </h2>
     <div className="max-w-xl mx-auto mt-10 px-4">
-      <h1 className="text-xl font-semibold text-white mb-4 text-center">
-        Discover & Follow Users
-      </h1>
+    
 
       <div className="relative mb-6">
         <input
@@ -130,6 +132,7 @@ export const FollowUsersPage = () => {
           ))}
         </ul>
       )}
+    </div>
     </div>
   );
 };
