@@ -19,10 +19,9 @@ type Message = {
 
 interface ChatBoxProps {
   selectedUser: Profile;
-  onBack?: () => void; // Add back button handler
 }
 
-export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser, onBack }) => {
+export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
   const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -119,45 +118,6 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser, onBack }) => {
 
   return (
     <div className="flex flex-col h-full bg-black text-white">
-      {/* Chat header */}
-      <div className="bg-[#0a0a0a] p-3 flex items-center border-b border-[#222] sticky top-0 z-10">
-        {onBack && (
-          <button 
-            onClick={onBack}
-            className="mr-2 p-1 rounded-full hover:bg-[#222] transition-colors"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-        )}
-        <div className="flex items-center">
-          {selectedUser.avatar_url ? (
-            <img
-              src={selectedUser.avatar_url}
-              alt={selectedUser.user_name}
-              className="w-9 h-9 rounded-full object-cover"
-            />
-          ) : (
-            <div className="w-9 h-9 rounded-full bg-[#333] flex items-center justify-center">
-              <span className="text-white text-lg">
-                {selectedUser.user_name.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          )}
-          <div className="ml-3">
-            <h2 className="text-md font-semibold">
-              {selectedUser.user_name}
-            </h2>
-            <p className="text-xs text-green-400 flex items-center">
-              <span className="w-2 h-2 rounded-full bg-green-400 mr-1"></span>
-              Online
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Messages container */}
       <div 
         className="flex-1 p-4 overflow-y-auto bg-black"

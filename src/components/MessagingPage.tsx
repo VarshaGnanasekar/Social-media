@@ -47,7 +47,7 @@ export default function MessagingPage() {
   );
 
   return (
-    <div className="flex flex-col h-screen bg-black overflow-hidden max-w-xl mx-auto mt-10 px-4">
+    <div className="flex flex-col h-screen bg-black overflow-hidden max-w-xl mx-auto">
       {/* Show user list when no user is selected */}
       {!selectedUser ? (
         <div className="flex flex-col w-full h-full">
@@ -82,9 +82,7 @@ export default function MessagingPage() {
                   <li
                     key={u.id}
                     className="flex items-center justify-between bg-[#0a0a0a] hover:bg-[#111] transition-colors px-4 py-3 cursor-pointer"
-                    onClick={() => {
-                      setSelectedUser(u);
-                    }}
+                    onClick={() => setSelectedUser(u)}
                   >
                     <div className="flex items-center space-x-3">
                       {u.avatar_url ? (
@@ -115,7 +113,7 @@ export default function MessagingPage() {
         /* Show chat box when a user is selected */
         <div className="flex flex-col h-full">
           {/* Mobile header with back button */}
-          <div className="flex items-center p-3 bg-[#0a0a0a] border-b border-[#222]">
+          <div className="flex items-center p-3 bg-[#0a0a0a] border-b border-[#222] sticky top-0 z-10">
             <button 
               onClick={() => setSelectedUser(null)}
               className="mr-3 p-1 rounded-full hover:bg-[#222]"
@@ -140,7 +138,7 @@ export default function MessagingPage() {
             </div>
           </div>
           
-          {/* Chat box */}
+          {/* Chat box - now without its own header */}
           <ChatBox selectedUser={selectedUser} />
         </div>
       )}
