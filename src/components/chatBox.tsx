@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
 import { useAuth } from "../context/AuthContext";
-import { ArrowLeft, Send, MessageSquare } from 'lucide-react';
+import {Send, MessageSquare } from 'lucide-react';
 
 type Profile = {
   id: string;
