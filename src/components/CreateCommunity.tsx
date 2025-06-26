@@ -33,10 +33,12 @@ export const CreateCommunity = () => {
     mutate({ name, description });
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <h2 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+    <div>
+    <h2 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
         Create New Community
       </h2>
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-4">
+      
       <div>
         <label htmlFor="name" className="block mb-2 font-medium">
           Community Name
@@ -70,5 +72,6 @@ export const CreateCommunity = () => {
       </button>
       {isError && <p className="text-red-500">Error creating community.</p>}
     </form>
+    </div>
   );
 };
