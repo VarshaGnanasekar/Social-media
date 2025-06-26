@@ -8,6 +8,9 @@ type Profile = {
   avatar_url?: string;
 };
 
+
+
+
 export const FollowUsersPage = () => {
   const { user } = useAuth();
   const [users, setUsers] = useState<Profile[]>([]);
@@ -15,6 +18,26 @@ export const FollowUsersPage = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFollowing, setIsFollowing] = useState(false);
+
+
+  const handleUnfollow = async (targetId: string) => {
+  setIsFollowing(true);
+  try {
+    const { error } = await supabase
+      .from("follows")
+      .delete()
+      .eq("follower_id", user?.id)
+      .eq("following_id", targetId);
+
+    if (!error) {
+      setFollowingIds((prev) => prev.filter((id) => id !== targetId));
+    } else {
+      console.error("Error unfollowing user:", error);
+    }
+  } finally {
+    setIsFollowing(false);
+  }
+};
 
   useEffect(() => {
     const fetchUsersAndFollows = async () => {
@@ -126,7 +149,18 @@ export const FollowUsersPage = () => {
                   {isFollowing ? "..." : "Follow"}
                 </button>
               ) : (
-                <span className="text-xs text-green-400">Following</span>
+                <button
+  onClick={() => handleUnfollow(u.id)}
+  disabled={isFollowing}
+  className={`text-xs px-3 py-1.5 rounded-md font-medium transition-all ${
+    isFollowing
+      ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+      : "bg-red-600 hover:bg-red-700 text-white"
+  }`}
+>
+  {isFollowing ? "..." : "Unfollow"}
+</button>
+
               )}
             </li>
           ))}
