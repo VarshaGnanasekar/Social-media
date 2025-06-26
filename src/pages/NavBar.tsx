@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../supabase-client";
 import { useAuth } from "../context/AuthContext";
+import { UserPlus } from "lucide-react";
+
 
 export const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -81,20 +83,8 @@ export const NavBar = () => {
       }`}
       aria-label="Follow"
     >
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        className="h-5 w-5" 
-        fill="none" 
-        viewBox="0 0 24 24" 
-        stroke="currentColor"
-      >
-        <path 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          strokeWidth={2} 
-          d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" 
-        />
-      </svg>
+      <UserPlus className="h-5 w-5" />
+
     </Link>
   );
 
@@ -234,20 +224,8 @@ export const NavBar = () => {
             className="flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors text-gray-300 hover:text-white hover:bg-gray-800/50"
             aria-label="Follow"
           >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5 mr-2" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" 
-              />
-            </svg>
+            <UserPlus className="h-5 w-5" />
+
             Follow
           </Link>
           
