@@ -130,10 +130,11 @@ export const CreatePost = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black py-12 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
-        Create New Posts
+    <div><h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+        Create New Post
       </h2>
+    <div className="min-h-screen bg-black py-12 px-4 sm:px-6 lg:px-8">
+      
 
       <div className="max-w-4xl mx-auto">
         {/* Header */}
@@ -320,6 +321,7 @@ export const CreatePost = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
