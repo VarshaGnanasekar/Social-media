@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { ChatBox } from "./chatBox";
-import { MessageSquare, ArrowLeft, Search, Send } from 'lucide-react';
+import { MessageSquare, ArrowLeft, Search} from 'lucide-react';
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../supabase-client";
 
