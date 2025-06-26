@@ -71,7 +71,8 @@ export const NavBar = () => {
     { to: "/communities", text: "Communities" },
     { to: "/community/create", text: "Create Community" },
     { to: "/myposts", text: "My Posts" },
-    { to: "/messages", text: "Messages" }
+    { to: "/messages", text: "Messages" },
+    { to: "/follow", text: "Follow" }
   ];
 
   return (
@@ -82,7 +83,7 @@ export const NavBar = () => {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+   
           <Link 
             to="/" 
             className="flex items-center space-x-1 group"
@@ -240,6 +241,8 @@ export const NavBar = () => {
                 </svg>
                 Sign in with GitHub
               </button>
+
+
             )}
           </div>
         </div>

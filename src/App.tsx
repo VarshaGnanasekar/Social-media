@@ -9,6 +9,7 @@ import { CommunityPage } from "./components/CommunityPage";
 import { MyPosts } from "./components/MyPosts";
 import {Profile} from "./components/Profile";
 import MessagingPage from "./components/MessagingPage";
+import { FollowUsersPage } from "./components/FollowUsersPage";
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/myposts" element={<MyPosts />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/messages" element={<MessagingPage />} />
+          <Route path="/follow" element={<FollowUsersPage/>} />
 
 
         </Routes>
