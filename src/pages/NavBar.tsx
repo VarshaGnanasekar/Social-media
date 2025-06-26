@@ -62,7 +62,7 @@ export const NavBar = () => {
 
   const displayName = user?.user_metadata.user_name || user?.email;
 
-  // Navigation links data
+  // Navigation links data (excluding Follow from main nav)
   const navLinks = [
     { to: "/", text: "Home" },
     { to: "/create", text: "Create Post" },
@@ -70,27 +70,33 @@ export const NavBar = () => {
     { to: "/community/create", text: "Create Community" },
     { to: "/myposts", text: "My Posts" },
     { to: "/messages", text: "Messages" },
-    { 
-      to: "/follow", 
-      text: "Follow",
-      icon: (
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-5 w-5" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" 
-          />
-        </svg>
-      )
-    }
   ];
+
+  // Follow button component
+  const FollowButton = () => (
+    <Link
+      to="/follow"
+      className={`flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-gray-700 text-white transition-colors ${
+        location.pathname === "/follow" ? "bg-purple-600 hover:bg-purple-700" : ""
+      }`}
+      aria-label="Follow"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-5 w-5" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          strokeWidth={2} 
+          d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" 
+        />
+      </svg>
+    </Link>
+  );
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -117,27 +123,22 @@ export const NavBar = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === link.to
                     ? "text-white bg-gray-800"
                     : "text-gray-300 hover:text-white hover:bg-gray-800/50"
                 }`}
                 aria-label={link.text}
               >
-                {link.to === "/follow" ? (
-                  <>
-                    {link.icon}
-                    <span className="sr-only">{link.text}</span>
-                  </>
-                ) : (
-                  link.text
-                )}
+                {link.text}
               </Link>
             ))}
           </div>
 
           {/* User Section */}
-          <div className="hidden md:flex items-center ml-4 space-x-4">
+          <div className="hidden md:flex items-center ml-4 space-x-3">
+            <FollowButton />
+            
             {user ? (
               <div className="flex items-center space-x-3">
                 <Link 
@@ -223,16 +224,32 @@ export const NavBar = () => {
               }`}
               aria-label={link.text}
             >
-              {link.to === "/follow" ? (
-                <>
-                  {link.icon}
-                  <span className="ml-2">{link.text}</span>
-                </>
-              ) : (
-                link.text
-              )}
+              {link.text}
             </Link>
           ))}
+          
+          {/* Mobile Follow Button */}
+          <Link
+            to="/follow"
+            className="flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors text-gray-300 hover:text-white hover:bg-gray-800/50"
+            aria-label="Follow"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 mr-2" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" 
+              />
+            </svg>
+            Follow
+          </Link>
           
           <div className="pt-4 pb-3 border-t border-gray-800">
             {user ? (
