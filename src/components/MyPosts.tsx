@@ -96,17 +96,19 @@ export const MyPosts = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-gray-800/50 rounded-xl overflow-hidden shadow-lg border border-gray-700/50 hover:border-pink-500/30 transition-all duration-300"
+            className="bg-gray-800/50 rounded-xl overflow-hidden shadow-lg border border-gray-700/50 hover:border-pink-500/30 transition-all duration-300 flex flex-col"
           >
-            <PostItem post={post} />
+            <div className="flex-grow">
+              <PostItem post={post} />
+            </div>
             
-            <div className="p-4 border-t border-gray-700/50 flex justify-end">
+            <div className="p-4 border-t border-gray-700/50 flex justify-center">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleDelete(post.id)}
                 disabled={isDeleting && deletingPostId === post.id}
-                className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all ${
+                className={`px-6 py-2 rounded-lg flex items-center gap-2 transition-all ${
                   isDeleting && deletingPostId === post.id
                     ? "bg-gray-700 text-gray-400 cursor-not-allowed"
                     : "bg-red-600/20 hover:bg-red-600/30 text-red-400 hover:text-red-300"
@@ -115,7 +117,7 @@ export const MyPosts = () => {
                 {isDeleting && deletingPostId === post.id ? (
                   <>
                     <svg
-                      className="animate-spin h-4 w-4"
+                      className="animate-spin h-5 w-5"
                       viewBox="0 0 24 24"
                       fill="none"
                     >
@@ -133,12 +135,12 @@ export const MyPosts = () => {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
                       />
                     </svg>
-                    Deleting...
+                    <span>Deleting...</span>
                   </>
                 ) : (
                   <>
                     <svg
-                      className="w-4 h-4"
+                      className="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
@@ -150,7 +152,7 @@ export const MyPosts = () => {
                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M4 7h16"
                       />
                     </svg>
-                    Delete
+                    <span>Delete Post</span>
                   </>
                 )}
               </motion.button>
