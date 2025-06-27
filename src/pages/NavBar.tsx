@@ -218,11 +218,12 @@ export const NavBar = () => {
             </Link>
           ))}
           
-          {/* Mobile Follow Button */}
+         
           <Link
             to="/follow"
             className="flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors text-gray-300 hover:text-white hover:bg-gray-800/50"
             aria-label="Follow"
+             onClick={() => setMenuOpen(!menuOpen)}
           >
             <UserPlus className="h-5 w-5" />
 
