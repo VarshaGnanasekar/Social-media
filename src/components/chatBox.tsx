@@ -99,6 +99,8 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
       setInput("");
     }
 
+    setMessages((prev) => [...prev, data?.[0]]);
+
     setIsSending(false);
   };
 
