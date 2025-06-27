@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
+
+const navigate = useNavigate();
+
 
 type Profile = {
   id: string;
@@ -120,8 +125,10 @@ const handleUnfollow = async (targetId: string) => {
             <li
               key={u.id}
               className="flex items-center justify-between bg-[#1c1c1c] border border-[#2a2a2a] rounded-lg px-4 py-3 hover:border-blue-500 transition-all"
+               onClick={() => navigate(`/user/${u.id}/posts`)}
             >
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3 cursor-pointer"
+              onClick={() => navigate(`/user/${u.id}/posts`)}>
                 {u.avatar_url ? (
                   <img
                     src={u.avatar_url}
