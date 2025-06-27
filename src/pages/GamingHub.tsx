@@ -8,21 +8,21 @@ export default function GamingHub() {
     id: 1,
     title: "2048 Classic",
     genre: "Puzzle",
-    image: "https://i.imgur.com/VBe4kD2.png", // Actual 2048 screenshot
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/2048_gameplay.png",
     playLink: "https://play2048.co/"
   },
   {
     id: 2,
     title: "Tetris",
     genre: "Puzzle",
-    image: "https://i.imgur.com/9JZwWqx.png", // Tetris gameplay
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/7c/Tetris_Game_Boy_screenshot.png",
     playLink: "https://tetris.com/play-tetris"
   },
   {
     id: 3,
     title: "Sudoku",
     genre: "Puzzle",
-    image: "https://i.imgur.com/7QZJY3a.png", // Clean Sudoku board
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sudoku-by-L2G-20050714.svg/800px-Sudoku-by-L2G-20050714.svg.png",
     playLink: "https://sudoku.com/"
   },
 
@@ -31,14 +31,14 @@ export default function GamingHub() {
     id: 4,
     title: "Chess",
     genre: "Strategy",
-    image: "https://i.imgur.com/3KZQY7j.png", // 3D chess board
+    image: "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PeterDoggers/phpCFSdYo.png",
     playLink: "https://www.chess.com/play/online"
   },
   {
     id: 5,
     title: "Checkers",
     genre: "Strategy",
-    image: "https://i.imgur.com/5v8W9yT.png", // Checkers mid-game
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Checkers-Canadian.png/640px-Checkers-Canadian.png",
     playLink: "https://www.mathsisfun.com/games/checkers.html"
   },
 
@@ -47,14 +47,14 @@ export default function GamingHub() {
     id: 6,
     title: "Typing Race",
     genre: "Skill",
-    image: "https://i.imgur.com/JqyeZtT.png", // Typing test screenshot
+    image: "https://i.ibb.co/kHtbj7v/typingrace.png",
     playLink: "https://play.typeracer.com/"
   },
   {
     id: 7,
     title: "Aim Trainer",
     genre: "Skill",
-    image: "https://i.imgur.com/9YQ9Z3y.png", // Aim training target
+    image: "https://i.ibb.co/Jn8Wq6C/aimtrainer.png",
     playLink: "https://aimtrainer.io/"
   },
 
@@ -63,24 +63,25 @@ export default function GamingHub() {
     id: 8,
     title: "Snake Game",
     genre: "Arcade",
-    image: "https://i.imgur.com/9JZwWqx.png", // Classic snake game
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/c4/Snake_game.gif",
     playLink: "https://playsnake.org/"
   },
   {
     id: 9,
     title: "Space Invaders",
     genre: "Arcade",
-    image: "https://i.imgur.com/7QZJY3a.png", // Retro space invaders
-    playLink: "https://www.spaceinvaders.com/"
+    image: "https://upload.wikimedia.org/wikipedia/en/0/01/Space_Invaders_arcade_game.png",
+    playLink: "https://www.retrogames.cz/play_023-Arcade.php?language=EN"
   },
   {
     id: 10,
     title: "Pac-Man",
     genre: "Arcade",
-    image: "https://i.imgur.com/VBe4kD2.png", // Classic Pac-Man
-    playLink: "https://www.pacman.com/"
+    image: "https://upload.wikimedia.org/wikipedia/en/5/59/Pac-man.png",
+    playLink: "https://www.pacman.com/en/"
   }
 ];
+
 
   return (
     <div className="min-h-screen bg-[#050505] text-white px-4 py-8">
