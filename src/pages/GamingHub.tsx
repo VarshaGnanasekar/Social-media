@@ -8,21 +8,21 @@ export default function GamingHub() {
     id: 1,
     title: "2048 Classic",
     genre: "Puzzle",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/2048_gameplay.png",
+    image: "/two.png",
     playLink: "https://play2048.co/"
   },
   {
     id: 2,
     title: "Tetris",
     genre: "Puzzle",
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/7c/Tetris_Game_Boy_screenshot.png",
+    image: "public\two.jpg",
     playLink: "https://tetris.com/play-tetris"
   },
   {
     id: 3,
     title: "Sudoku",
     genre: "Puzzle",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sudoku-by-L2G-20050714.svg/800px-Sudoku-by-L2G-20050714.svg.png",
+    image: "public\three.avif",
     playLink: "https://sudoku.com/"
   },
 
@@ -31,7 +31,7 @@ export default function GamingHub() {
     id: 4,
     title: "Chess",
     genre: "Strategy",
-    image: "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PeterDoggers/phpCFSdYo.png",
+    image:"public\four.jpeg",
     playLink: "https://www.chess.com/play/online"
   },
   {
