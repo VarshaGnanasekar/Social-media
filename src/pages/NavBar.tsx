@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../supabase-client";
 import { useAuth } from "../context/AuthContext";
-import { UserPlus } from "lucide-react";
+import { UserPlus,Bell } from "lucide-react";
 
 
 export const NavBar = () => {
@@ -88,7 +88,7 @@ export const NavBar = () => {
     </Link>
   );
 
-  import { UserPlus, Bell } from "lucide-react"; // Already imported or update if needed
+  
 
 // New follow request icon button
 const FollowRequestsLink = () => (
