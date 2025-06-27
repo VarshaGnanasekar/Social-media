@@ -41,14 +41,29 @@ function App() {
 
         </Routes>
       </div>
-      <div className="fixed bottom-5 right-5 z-50">
+      <div className="fixed bottom-6 right-6 z-50">
   <Link
-  to="/gaming"
-  className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg transition transform hover:scale-105"
-  title="Go to Gaming Hub"
->
-  <Gamepad size={24} strokeWidth={2.5} />
-</Link>
+    to="/gaming"
+    className="
+      bg-[#1a1a1a] hover:bg-[#2a2a2a] 
+      text-purple-400 hover:text-purple-300
+      p-3 rounded-full 
+      shadow-lg shadow-black/50
+      border border-[#333]
+      transition-all 
+      duration-300
+      hover:scale-110
+      flex items-center justify-center
+      w-12 h-12
+    "
+    title="Gaming Hub"
+  >
+    <Gamepad 
+      size={20} 
+      strokeWidth={2} 
+      className="transition-transform group-hover:rotate-6" 
+    />
+  </Link>
 </div>
     </div>
   );
