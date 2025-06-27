@@ -33,16 +33,19 @@ const games = [
   },
 ];
   return (
+    <div>
+        <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+        Ctrl+Play
+      </h2>
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white px-6 py-10">
-      <h1 className="text-4xl font-bold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-        🎮 Gaming Hub
-      </h1>
+      
 
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {games.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
       </div>
+    </div>
     </div>
   );
 }
