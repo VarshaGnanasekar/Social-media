@@ -1,51 +1,65 @@
+// GamingHub.tsx
 import GameCard from "../components/GameCard"
 
 export default function GamingHub() {
-    
-const games = [
-  {
-    id: 1,
-    title: "2048 Classic",
-    genre: "Puzzle",
-    image: "https://picsum.photos/seed/2048/300/200",
-    playLink: "/games/2048",
-  },
-  {
-    id: 2,
-    title: "Tic Tac Toe",
-    genre: "Strategy",
-    image: "https://picsum.photos/seed/tictactoe/300/200",
-    playLink: "/games/tictactoe",
-  },
-  {
-    id: 3,
-    title: "Typing Race",
-    genre: "Skill",
-    image: "https://picsum.photos/seed/typing/300/200",
-    playLink: "/games/typing",
-  },
-  {
-    id: 4,
-    title: "Memory Flip",
-    genre: "Memory",
-    image: "https://picsum.photos/seed/memory/300/200",
-    playLink: "/games/memory",
-  },
-];
-  return (
-    <div>
-        <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
-        Ctrl+Play
-      </h2>
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white px-6 py-10">
-      
+  const games = [
+    {
+      id: 1,
+      title: "2048 Classic",
+      genre: "Puzzle",
+      image: "https://picsum.photos/seed/2048/300/200",
+      playLink: "/games/2048",
+    },
+    {
+      id: 2,
+      title: "Tic Tac Toe",
+      genre: "Strategy",
+      image: "https://picsum.photos/seed/tictactoe/300/200",
+      playLink: "/games/tictactoe",
+    },
+    {
+      id: 3,
+      title: "Typing Race",
+      genre: "Skill",
+      image: "https://picsum.photos/seed/typing/300/200",
+      playLink: "/games/typing",
+    },
+    {
+      id: 4,
+      title: "Memory Flip",
+      genre: "Memory",
+      image: "https://picsum.photos/seed/memory/300/200",
+      playLink: "/games/memory",
+    },
+  ];
 
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {games.map((game) => (
-          <GameCard key={game.id} game={game} />
-        ))}
+  return (
+    <div className="min-h-screen bg-[#050505] text-white px-4 py-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl max-sm:text-3xl font-bold mb-2 bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">
+            Ctrl+Play
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            Dive into our collection of immersive games
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {games.map((game) => (
+            <GameCard key={game.id} game={game} />
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <h3 className="text-xl font-medium mb-4 text-gray-300">More games coming soon</h3>
+          <div className="flex justify-center gap-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="w-32 h-40 bg-[#0d0d0d] border border-[#1a1a1a] rounded-lg opacity-50" />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   );
 }
