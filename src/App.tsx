@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router";
+import { Link } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { CreatePostPage } from "./pages/CreatePostPage";
 import { PostPage } from "./pages/PostPage";
@@ -12,6 +13,8 @@ import MessagingPage from "./components/MessagingPage";
 import { FollowUsersPage } from "./components/FollowUsersPage";
 import { UserPostsPage } from "./components/UserPostsPage";
 import { FollowRequestsPage } from "./pages/FollowreqPage";
+import GamingHub from "./pages/GamingHub";
+import { Gamepad } from "lucide-react";
 
 
 function App() {
@@ -32,11 +35,21 @@ function App() {
           <Route path="/follow" element={<FollowUsersPage/>} />
           <Route path="/user/:userId/posts" element={<UserPostsPage />} />
           <Route path="/follow-requests" element={<FollowRequestsPage />} />
+          <Route path="/gaming" element={<GamingHub />} />
 
 
 
         </Routes>
       </div>
+      <div className="fixed bottom-5 right-5 z-50">
+  <Link
+  to="/gaming"
+  className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg transition transform hover:scale-105"
+  title="Go to Gaming Hub"
+>
+  <Gamepad size={24} strokeWidth={2.5} />
+</Link>
+</div>
     </div>
   );
 }
