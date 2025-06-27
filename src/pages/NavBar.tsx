@@ -88,6 +88,22 @@ export const NavBar = () => {
     </Link>
   );
 
+  import { UserPlus, Bell } from "lucide-react"; // Already imported or update if needed
+
+// New follow request icon button
+const FollowRequestsLink = () => (
+  <Link
+    to="/follow-requests"
+    className={`flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-gray-700 text-white transition-colors ${
+      location.pathname === "/follow-requests" ? "bg-purple-600 hover:bg-purple-700" : ""
+    }`}
+    aria-label="Follow Requests"
+  >
+    <Bell className="h-5 w-5" />
+  </Link>
+);
+
+
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       scrolled 
@@ -128,6 +144,7 @@ export const NavBar = () => {
           {/* User Section */}
           <div className="hidden md:flex items-center ml-4 space-x-3">
             <FollowButton />
+            <FollowRequestsLink />
             
             {user ? (
               <div className="flex items-center space-x-3">
@@ -225,9 +242,19 @@ export const NavBar = () => {
             aria-label="Follow"
              onClick={() => setMenuOpen(!menuOpen)}
           >
-            <UserPlus className="h-5 w-5" />
+            <UserPlus className="h-5 w-5 mr-1" />
 
             Follow
+          </Link>
+
+          <Link
+              to="/follow-requests"
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors text-gray-300 hover:text-white hover:bg-gray-800/50"
+              aria-label="Follow Requests"
+              onClick={() => setMenuOpen(false)}
+            >
+              <Bell className="h-5 w-5 mr-1" />
+              Follow Requests
           </Link>
           
           <div className="pt-4 pb-3 border-t border-gray-800">
