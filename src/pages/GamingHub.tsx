@@ -7,21 +7,21 @@ const games = [
     id: 1,
     title: "2048 Classic",
     genre: "Puzzle",
-    image: "/two.jpg", // ✅ Correct usage
+    image: "/one.avif", 
     playLink: "https://play2048.co/"
   },
   {
     id: 2,
     title: "Tetris",
     genre: "Puzzle",
-    image: "/two.jpg", // ✅
+    image: "/two.jpg", 
     playLink: "https://tetris.com/play-tetris"
   },
   {
     id: 3,
     title: "Sudoku",
     genre: "Puzzle",
-    image: "/three.avif", // ✅
+    image: "/three.avif", 
     playLink: "https://sudoku.com/"
   },
   {
