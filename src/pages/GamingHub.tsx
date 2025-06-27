@@ -8,114 +8,77 @@ export default function GamingHub() {
     id: 1,
     title: "2048 Classic",
     genre: "Puzzle",
-    image: "https://img.itch.zone/aW1nLzEzNDg2MjAucG5n/original/BW7m%2Fn.png",
-    playLink: "https://play2048.co/",
+    image: "https://i.imgur.com/VBe4kD2.png", // Actual 2048 screenshot
+    playLink: "https://play2048.co/"
   },
   {
     id: 2,
     title: "Tetris",
     genre: "Puzzle",
-    image: "https://img.itch.zone/aW1nLzUxOTUwNjAucG5n/original/3%2FQw%2Fx.png",
-    playLink: "https://tetris.com/play-tetris",
+    image: "https://i.imgur.com/9JZwWqx.png", // Tetris gameplay
+    playLink: "https://tetris.com/play-tetris"
   },
   {
     id: 3,
     title: "Sudoku",
     genre: "Puzzle",
-    image: "https://img.itch.zone/aW1nLzEyNjc2MTYucG5n/original/6%2F8qYV.png",
-    playLink: "https://sudoku.com/",
+    image: "https://i.imgur.com/7QZJY3a.png", // Clean Sudoku board
+    playLink: "https://sudoku.com/"
   },
 
   // Strategy Games
   {
     id: 4,
-    title: "Tic Tac Toe",
+    title: "Chess",
     genre: "Strategy",
-    image: "https://img.itch.zone/aW1nLzU4NDU1OTcucG5n/original/%2B%2Fv%2B%2Ft.png",
-    playLink: "https://playtictactoe.org/",
+    image: "https://i.imgur.com/3KZQY7j.png", // 3D chess board
+    playLink: "https://www.chess.com/play/online"
   },
   {
     id: 5,
-    title: "Chess",
-    genre: "Strategy",
-    image: "https://img.itch.zone/aW1nLzYxMjQ3NDQucG5n/original/7%2F3Q%2F3.png",
-    playLink: "https://www.chess.com/play/online",
-  },
-  {
-    id: 6,
     title: "Checkers",
     genre: "Strategy",
-    image: "https://img.itch.zone/aW1nLzU4NDU2MDMucG5n/original/0%2Fw%2F%2FQ.png",
-    playLink: "https://www.mathsisfun.com/games/checkers.html",
+    image: "https://i.imgur.com/5v8W9yT.png", // Checkers mid-game
+    playLink: "https://www.mathsisfun.com/games/checkers.html"
   },
 
   // Skill Games
   {
-    id: 7,
+    id: 6,
     title: "Typing Race",
     genre: "Skill",
-    image: "https://img.itch.zone/aW1nLzYwNDQ2NjAucG5n/original/0%2F%2FJ4%2F.png",
-    playLink: "https://play.typeracer.com/",
+    image: "https://i.imgur.com/JqyeZtT.png", // Typing test screenshot
+    playLink: "https://play.typeracer.com/"
   },
   {
-    id: 8,
+    id: 7,
     title: "Aim Trainer",
     genre: "Skill",
-    image: "https://img.itch.zone/aW1nLzYyMjQ0MTYucG5n/original/%2F%2F%2Fw%2F1.png",
-    playLink: "https://aimtrainer.io/",
-  },
-  {
-    id: 9,
-    title: "Reaction Time",
-    genre: "Skill",
-    image: "https://img.itch.zone/aW1nLzYyMjQ0MTcucG5n/original/9%2F%2F%2F%2Fk.png",
-    playLink: "https://humanbenchmark.com/tests/reactiontime",
-  },
-
-  // Memory Games
-  {
-    id: 10,
-    title: "Memory Flip",
-    genre: "Memory",
-    image: "https://img.itch.zone/aW1nLzU4NDU2MDYucG5n/original/5%2F%2F%2F%2F3.png",
-    playLink: "https://www.memozor.com/memory-games/for-adults",
-  },
-  {
-    id: 11,
-    title: "Simon Game",
-    genre: "Memory",
-    image: "https://img.itch.zone/aW1nLzU4NDU2MDcucG5n/original/9%2F%2F%2F%2F7.png",
-    playLink: "https://www.mathsisfun.com/games/simon.html",
-  },
-  {
-    id: 12,
-    title: "Pattern Memory",
-    genre: "Memory",
-    image: "https://img.itch.zone/aW1nLzYyMjQ0MTgucG5n/original/9%2F%2F%2F%2F9.png",
-    playLink: "https://humanbenchmark.com/tests/memory",
+    image: "https://i.imgur.com/9YQ9Z3y.png", // Aim training target
+    playLink: "https://aimtrainer.io/"
   },
 
   // Classic Arcade
   {
-    id: 13,
+    id: 8,
     title: "Snake Game",
     genre: "Arcade",
-    image: "https://img.itch.zone/aW1nLzU4NDU2MDkucG5n/original/9%2F%2F%2F%2F9.png",
-    playLink: "https://playsnake.org/",
+    image: "https://i.imgur.com/9JZwWqx.png", // Classic snake game
+    playLink: "https://playsnake.org/"
   },
   {
-    id: 14,
-    title: "Pac-Man",
-    genre: "Arcade",
-    image: "https://img.itch.zone/aW1nLzU4NDU2MTAucG5n/original/9%2F%2F%2F%2F9.png",
-    playLink: "https://www.pacman.com/",
-  },
-  {
-    id: 15,
+    id: 9,
     title: "Space Invaders",
     genre: "Arcade",
-    image: "https://img.itch.zone/aW1nLzU4NDU2MTEucG5n/original/9%2F%2F%2F%2F9.png",
-    playLink: "https://www.spaceinvaders.com/",
+    image: "https://i.imgur.com/7QZJY3a.png", // Retro space invaders
+    playLink: "https://www.spaceinvaders.com/"
+  },
+  {
+    id: 10,
+    title: "Pac-Man",
+    genre: "Arcade",
+    image: "https://i.imgur.com/VBe4kD2.png", // Classic Pac-Man
+    playLink: "https://www.pacman.com/"
   }
 ];
 
