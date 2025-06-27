@@ -11,6 +11,7 @@ import {Profile} from "./components/Profile";
 import MessagingPage from "./components/MessagingPage";
 import { FollowUsersPage } from "./components/FollowUsersPage";
 import { UserPostsPage } from "./components/UserPostsPage";
+import { FollowRequestsPage } from "./pages/FollowreqPage";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/messages" element={<MessagingPage />} />
           <Route path="/follow" element={<FollowUsersPage/>} />
           <Route path="/user/:userId/posts" element={<UserPostsPage />} />
+          <Route path="/follow-requests" element={<FollowRequestsPage />} />
 
 
 
