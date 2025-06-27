@@ -38,20 +38,30 @@ export default function GameCard({ game }: GameCardProps) {
         <h2 className="text-lg font-semibold mb-1 text-white">{game.title}</h2>
         <p className="text-sm text-gray-400 mb-3">{game.genre}</p>
         <a
-          href={game.playLink}
-          className="
-            inline-block 
-            bg-gradient-to-r from-purple-700 to-pink-700 
-            hover:from-purple-600 hover:to-pink-600
-            px-4 py-2 
-            rounded-lg 
-            text-sm font-medium
-            transition-all
-            shadow-lg shadow-purple-900/20
-          "
-        >
-          Play Now
-        </a>
+  href={game.playLink}
+  className="
+    inline-flex
+    items-center
+    gap-2
+    bg-transparent
+    hover:bg-gray-800/50
+    border border-gray-700
+    hover:border-gray-600
+    px-4 py-2
+    rounded-lg
+    text-sm font-medium
+    transition-all
+    duration-200
+    group
+  "
+>
+  <span>Play</span>
+  <Play 
+    size={16}
+    strokeWidth={2}
+    className="transition-transform group-hover:translate-x-0.5"
+  />
+</a>
       </div>
     </div>
   );
