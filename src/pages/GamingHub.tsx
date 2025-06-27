@@ -28,7 +28,7 @@ const games = [
     id: 4,
     title: "Chess",
     genre: "Strategy",
-    image: "/four.jpeg", // ✅
+    image: "/four.jpeg", 
     playLink: "https://www.chess.com/play/online"
   },
   {
@@ -84,7 +84,7 @@ const games = [
     <div className="min-h-screen bg-[#050505] text-white px-4 py-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-5xl max-sm:text-3xl font-bold mb-2 bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl max-sm:text-2xl font-bold mb-2 bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">
             Ctrl+Play
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
