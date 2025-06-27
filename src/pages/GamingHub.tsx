@@ -2,43 +2,40 @@
 import GameCard from "../components/GameCard"
 
 export default function GamingHub() {
-  const games = [
-  // Puzzle Games
+const games = [
   {
     id: 1,
     title: "2048 Classic",
     genre: "Puzzle",
-    image: "public/two.png",
+    image: "/two.jpg", // ✅ Correct usage
     playLink: "https://play2048.co/"
   },
   {
     id: 2,
     title: "Tetris",
     genre: "Puzzle",
-    image: "public\two.jpg",
+    image: "/two.jpg", // ✅
     playLink: "https://tetris.com/play-tetris"
   },
   {
     id: 3,
     title: "Sudoku",
     genre: "Puzzle",
-    image: "public\three.avif",
+    image: "/three.avif", // ✅
     playLink: "https://sudoku.com/"
   },
-
-  // Strategy Games
   {
     id: 4,
     title: "Chess",
     genre: "Strategy",
-    image:"public\four.jpeg",
+    image: "/four.jpeg", // ✅
     playLink: "https://www.chess.com/play/online"
   },
   {
     id: 5,
     title: "Checkers",
     genre: "Strategy",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Checkers-Canadian.png/640px-Checkers-Canadian.png",
+    image: "/five.jpg",
     playLink: "https://www.mathsisfun.com/games/checkers.html"
   },
 
@@ -47,14 +44,14 @@ export default function GamingHub() {
     id: 6,
     title: "Typing Race",
     genre: "Skill",
-    image: "https://i.ibb.co/kHtbj7v/typingrace.png",
+    image: "/six.png",
     playLink: "https://play.typeracer.com/"
   },
   {
     id: 7,
     title: "Aim Trainer",
     genre: "Skill",
-    image: "https://i.ibb.co/Jn8Wq6C/aimtrainer.png",
+    image: "/six.png",
     playLink: "https://aimtrainer.io/"
   },
 
@@ -63,21 +60,21 @@ export default function GamingHub() {
     id: 8,
     title: "Snake Game",
     genre: "Arcade",
-    image: "https://upload.wikimedia.org/wikipedia/commons/c/c4/Snake_game.gif",
+    image: "/eight.jpg",
     playLink: "https://playsnake.org/"
   },
   {
     id: 9,
     title: "Space Invaders",
     genre: "Arcade",
-    image: "https://upload.wikimedia.org/wikipedia/en/0/01/Space_Invaders_arcade_game.png",
+    image: "/nine.png",
     playLink: "https://www.retrogames.cz/play_023-Arcade.php?language=EN"
   },
   {
     id: 10,
     title: "Pac-Man",
     genre: "Arcade",
-    image: "https://upload.wikimedia.org/wikipedia/en/5/59/Pac-man.png",
+    image: "/ten.jpg",
     playLink: "https://www.pacman.com/en/"
   }
 ];
