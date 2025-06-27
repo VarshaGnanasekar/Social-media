@@ -8,7 +8,7 @@ export default function GamingHub() {
     id: 1,
     title: "2048 Classic",
     genre: "Puzzle",
-    image: "/two.png",
+    image: "public/two.png",
     playLink: "https://play2048.co/"
   },
   {
