@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 
-const navigate = useNavigate();
 
 
 type Profile = {
@@ -23,6 +22,9 @@ export const FollowUsersPage = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
+
+  
+const navigate = useNavigate();
 
 
 const handleUnfollow = async (targetId: string) => {
@@ -125,7 +127,7 @@ const handleUnfollow = async (targetId: string) => {
             <li
               key={u.id}
               className="flex items-center justify-between bg-[#1c1c1c] border border-[#2a2a2a] rounded-lg px-4 py-3 hover:border-blue-500 transition-all"
-               onClick={() => navigate(`/user/${u.id}/posts`)}
+              
             >
               <div className="flex items-center space-x-3 cursor-pointer"
               onClick={() => navigate(`/user/${u.id}/posts`)}>
