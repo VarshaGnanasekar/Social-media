@@ -92,11 +92,12 @@ export const FollowRequestsPage = () => {
     }
   };
 
+
   return (
+    <div>
+    <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent"></h2>
     <div className="max-w-2xl mx-auto py-10 px-4 text-white">
-      <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">
-        Follow Requests
-      </h2>
+      
 
       {loading ? (
         <div className="text-center text-gray-400">Loading...</div>
@@ -153,6 +154,7 @@ export const FollowRequestsPage = () => {
           ))}
         </ul>
       )}
+    </div>
     </div>
   );
 };
