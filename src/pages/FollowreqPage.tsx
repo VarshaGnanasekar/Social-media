@@ -4,11 +4,22 @@ import { useAuth } from "../context/AuthContext";
 
 type FollowRequest = {
   follower_id: string;
+  status: string;
   follower_profile: {
+    user_name: string;
+    avatar_url?: string;
+  };
+};
+
+type RawFollowRequest = {
+  follower_id: string;
+  status: string;
+  profiles: {
     user_name: string;
     avatar_url?: string;
   } | null;
 };
+
 
 export const FollowRequestsPage = () => {
   const { user } = useAuth();
@@ -19,18 +30,30 @@ export const FollowRequestsPage = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       setLoading(true);
+
       const { data, error } = await supabase
-        .from("follow_requests")
-        .select("follower_id, follower_profile(user_name, avatar_url)")
-        .eq("following_id", user?.id);
+        .from("follows")
+        .select(`
+          follower_id,
+          status,
+          profiles:follower_id(user_name, avatar_url)
+        `)
+        .eq("following_id", user?.id)
+        .eq("status", "pending");
 
       if (error) {
         console.error("Error fetching follow requests:", error);
+        setRequests([]);
       } else {
-        const formattedData = (data || []).map((item: any) => ({
-          follower_id: item.follower_id,
-          follower_profile: item.follower_profile?.[0] ?? null,
-        }));
+        const formattedData: FollowRequest[] = (data as unknown as RawFollowRequest[]).map((item) => ({
+  follower_id: item.follower_id,
+  status: item.status,
+  follower_profile: {
+    user_name: item.profiles?.user_name || "Unknown",
+    avatar_url: item.profiles?.avatar_url,
+  },
+}));
+
         setRequests(formattedData);
       }
 
@@ -44,24 +67,26 @@ export const FollowRequestsPage = () => {
     setRespondingId(followerId);
     try {
       if (accept) {
-        const { error: insertError } = await supabase.from("follows").insert({
-          follower_id: followerId,
-          following_id: user?.id,
-        });
-        if (insertError) throw insertError;
+        const { error } = await supabase
+          .from("follows")
+          .update({ status: "approved" })
+          .eq("follower_id", followerId)
+          .eq("following_id", user?.id);
+
+        if (error) throw error;
+      } else {
+        const { error } = await supabase
+          .from("follows")
+          .delete()
+          .eq("follower_id", followerId)
+          .eq("following_id", user?.id);
+
+        if (error) throw error;
       }
 
-      const { error: deleteError } = await supabase
-        .from("follow_requests")
-        .delete()
-        .eq("follower_id", followerId)
-        .eq("following_id", user?.id);
-
-      if (deleteError) throw deleteError;
-
       setRequests((prev) => prev.filter((r) => r.follower_id !== followerId));
-    } catch (error) {
-      console.error("Error updating request:", error);
+    } catch (err) {
+      console.error("Error updating request:", err);
     } finally {
       setRespondingId(null);
     }
@@ -85,7 +110,7 @@ export const FollowRequestsPage = () => {
               className="flex items-center justify-between bg-[#1c1c1c] border border-[#2a2a2a] rounded-lg px-4 py-3"
             >
               <div className="flex items-center space-x-3">
-                {req.follower_profile?.avatar_url ? (
+                {req.follower_profile.avatar_url ? (
                   <img
                     src={req.follower_profile.avatar_url}
                     alt="avatar"
@@ -93,11 +118,11 @@ export const FollowRequestsPage = () => {
                   />
                 ) : (
                   <div className="w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm font-semibold">
-                    {req.follower_profile?.user_name[0]?.toUpperCase() ?? "?"}
+                    {req.follower_profile.user_name[0]?.toUpperCase()}
                   </div>
                 )}
                 <span className="text-sm text-white font-medium">
-                  {req.follower_profile?.user_name ?? "Unknown User"}
+                  {req.follower_profile.user_name}
                 </span>
               </div>
               <div className="flex gap-2">

@@ -93,7 +93,7 @@ export const FollowUsersPage = () => {
 
   return (
     <div>
-      <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+      <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">
         Discover and Follow Users
       </h2>
       <div className="max-w-xl mx-auto mt-10 px-4">
