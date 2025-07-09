@@ -6,6 +6,9 @@ interface Props {
 }
 
 export const TweetItem = ({ tweet }: Props) => {
+  // Check if avatar_url comes from a nested profile object
+  const avatarUrl = tweet.avatar_url || tweet.profiles?.avatar_url;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -16,11 +19,15 @@ export const TweetItem = ({ tweet }: Props) => {
       <div className="flex gap-3">
         {/* Avatar */}
         <div className="flex-shrink-0">
-          {tweet.avatar_url ? (
+          {avatarUrl ? (
             <img
-              src={tweet.avatar_url}
+              src={avatarUrl}
               alt={tweet.author}
-              className="w-10 h-10 rounded-full border border-gray-700"
+              className="w-10 h-10 rounded-full border border-gray-700 object-cover"
+              onError={(e) => {
+                // Fallback if image fails to load
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
             />
           ) : (
             <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">
