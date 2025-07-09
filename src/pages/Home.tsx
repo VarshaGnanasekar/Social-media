@@ -1,4 +1,5 @@
 import { PostList } from "../components/PostList";
+import { TweetList } from "../components/TweetList";
 
 export const Home = () => {
   return (
@@ -8,6 +9,7 @@ export const Home = () => {
       </h2>
       <div>
         <PostList />
+        <TweetList />
       </div>
     </div>
   );
