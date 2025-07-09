@@ -4,6 +4,7 @@ import { TweetItem } from "./TweetItem";
 import { useAuth } from "../context/AuthContext";
 
 export interface Tweet {
+  profiles: any;
   id: number;
   content: string;
   created_at: string;
