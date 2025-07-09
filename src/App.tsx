@@ -18,6 +18,7 @@ import GamingHub from "./pages/GamingHub";
 import { Gamepad,Feather } from "lucide-react";
 
 
+
 function App() {
   return (
     <div className="min-h-screen bg-black text-gray-100 transition-opacity duration-700 pt-20">
