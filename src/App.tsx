@@ -12,9 +12,10 @@ import {Profile} from "./components/Profile";
 import MessagingPage from "./components/MessagingPage";
 import { FollowUsersPage } from "./components/FollowUsersPage";
 import { UserPostsPage } from "./components/UserPostsPage";
+import { CreateTweet } from "./components/createTweet";
 import { FollowRequestsPage } from "./pages/FollowreqPage";
 import GamingHub from "./pages/GamingHub";
-import { Gamepad } from "lucide-react";
+import { Gamepad,Feather } from "lucide-react";
 
 
 function App() {
@@ -36,6 +37,8 @@ function App() {
           <Route path="/user/:userId/posts" element={<UserPostsPage />} />
           <Route path="/follow-requests" element={<FollowRequestsPage />} />
           <Route path="/gaming" element={<GamingHub />} />
+          <Route path="/tweet" element={<CreateTweet />} />
+
 
 
 
@@ -64,6 +67,31 @@ function App() {
       className="transition-transform group-hover:rotate-6" 
     />
   </Link>
+
+  {/* Tweet Button */}
+  <Link
+    to="/tweet"
+    className="
+      bg-[#1a1a1a] hover:bg-[#2a2a2a] 
+      text-cyan-400 hover:text-cyan-300
+      p-3 rounded-full 
+      shadow-lg shadow-black/50
+      border border-[#333]
+      transition-all 
+      duration-300
+      hover:scale-110
+      flex items-center justify-center
+      w-12 h-12
+    "
+    title="Tweet"
+  >
+    <Feather 
+      size={20} 
+      strokeWidth={2} 
+      className="transition-transform group-hover:-rotate-6" 
+    />
+  </Link>
+  
 </div>
     </div>
   );

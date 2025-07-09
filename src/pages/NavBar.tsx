@@ -89,8 +89,7 @@ export const NavBar = () => {
   );
 
   
-
-// New follow request icon button
+==
 const FollowRequestsLink = () => (
   <Link
     to="/follow-requests"
