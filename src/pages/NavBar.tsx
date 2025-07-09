@@ -88,8 +88,7 @@ export const NavBar = () => {
     </Link>
   );
 
-  
-==
+
 const FollowRequestsLink = () => (
   <Link
     to="/follow-requests"
