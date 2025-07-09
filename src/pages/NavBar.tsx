@@ -72,6 +72,7 @@ export const NavBar = () => {
     { to: "/community/create", text: "Create Community" },
     { to: "/myposts", text: "My Posts" },
     { to: "/messages", text: "Messages" },
+    {to:"/mytweets",text:"My Tweets"}
   ];
 
   // Follow button component

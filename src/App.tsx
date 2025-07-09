@@ -16,6 +16,7 @@ import { CreateTweet } from "./pages/CreateTweet";
 import { FollowRequestsPage } from "./pages/FollowreqPage";
 import GamingHub from "./pages/GamingHub";
 import { Gamepad,Feather } from "lucide-react";
+import { MyTweets } from "./components/MyTweets";
 
 
 
@@ -39,13 +40,14 @@ function App() {
           <Route path="/follow-requests" element={<FollowRequestsPage />} />
           <Route path="/gaming" element={<GamingHub />} />
           <Route path="/tweet" element={<CreateTweet />} />
+          <Route path="/mytweets" element={<MyTweets />} />
 
 
 
 
         </Routes>
       </div>
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-5">
 
   <Link
     to="/gaming"
