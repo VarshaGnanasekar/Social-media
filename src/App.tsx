@@ -12,7 +12,7 @@ import {Profile} from "./components/Profile";
 import MessagingPage from "./components/MessagingPage";
 import { FollowUsersPage } from "./components/FollowUsersPage";
 import { UserPostsPage } from "./components/UserPostsPage";
-import { CreateTweet } from "./components/createTweet";
+import { CreateTweet } from "./pages/CreateTweet";
 import { FollowRequestsPage } from "./pages/FollowreqPage";
 import GamingHub from "./pages/GamingHub";
 import { Gamepad,Feather } from "lucide-react";
