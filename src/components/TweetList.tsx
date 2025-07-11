@@ -4,13 +4,13 @@ import { TweetItem } from "./TweetItem";
 import { useAuth } from "../context/AuthContext";
 
 export interface Tweet {
-  profiles: any;
   id: number;
   content: string;
   created_at: string;
-  user_id: string;
-  author: string;
   avatar_url?: string;
+  like_count?: number;
+  comment_count?: number;
+  author: string;
 }
 
 const fetchFollowedTweets = async (userId: string): Promise<Tweet[]> => {
@@ -38,7 +38,7 @@ export const TweetList = () => {
   if (!user) {
     return (
       <div className="text-center text-gray-400 mt-10">
-        Please log in to see tweets.
+        Please log in to see followed users' tweets.
       </div>
     );
   }
@@ -60,7 +60,7 @@ export const TweetList = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-4 px-4 py-6">
+    <div className="flex flex-col gap-6 px-4 py-10 max-w-xl mx-auto">
       {data!.map((tweet) => (
         <TweetItem key={tweet.id} tweet={tweet} />
       ))}
