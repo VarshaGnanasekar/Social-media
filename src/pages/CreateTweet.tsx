@@ -1,49 +1,66 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabase-client";
 import { useAuth } from "../context/AuthContext";
 
+// Interface for one tweet row
+export interface TweetRow {
+  id: number;
+  content: string;
+  user_id: string;
+  author: string;
+  created_at: string;
+}
+
 export const CreateTweet = () => {
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState("");
   const { user } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  // ✅ Function to create tweet
-  const createTweet = async (
-    content: string,
-    userId: string,
-    author: string
-  ) => {
+  // ✅ Supabase insert function
+  const createTweet = async (vars: {
+    content: string;
+    userId: string;
+    author: string;
+  }): Promise<TweetRow> => {
     const { data, error } = await supabase
       .from("tweets")
       .insert({
-        content,
-        user_id: userId,
-        author,
+        content: vars.content,
+        user_id: vars.userId,
+        author: vars.author,
       })
-      .select();
+      .select()
+      .single();
 
-    if (error) throw new Error(error.message);
+    if (error || !data) throw new Error(error?.message || "Tweet creation failed");
     return data;
   };
 
-  const { mutate, isPending, isError, error } = useMutation({
-    mutationFn: ({ content, userId, author }: { content: string; userId: string; author: string }) =>
-      createTweet(content, userId, author),
+  // ✅ useMutation with proper generics for types
+  const { mutate, isPending, isError, error } = useMutation<
+    TweetRow,
+    Error,
+    { content: string; userId: string; author: string }
+  >({
+    mutationFn: createTweet,
     onSuccess: () => {
       setContent("");
-      navigate("/tweets"); // redirect after success
+      queryClient.invalidateQueries({ queryKey: ["followed-tweets", user?.id] });
+      navigate("/tweets");
     },
   });
 
+  // ✅ handle form submit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!user?.id || !content.trim()) return;
     mutate({
-      content,
+      content: content.trim(),
       userId: user.id,
-      author: user.user_metadata.user_name || "Anonymous",
+      author: (user.user_metadata?.user_name as string) || "Anonymous",
     });
   };
 
@@ -66,7 +83,7 @@ export const CreateTweet = () => {
             <button
               type="submit"
               disabled={isPending || !content.trim()}
-              className="px-5 py-2 rounded-lg font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600"
+              className="px-5 py-2 rounded-lg font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 disabled:opacity-50"
             >
               {isPending ? "Tweeting..." : "Tweet"}
             </button>
