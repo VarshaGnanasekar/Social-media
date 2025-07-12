@@ -79,7 +79,7 @@ export const MyTweets = () => {
 
   return (
     <div className="pb-8 px-4">
-      <h2 className="text-2xl font-bold mb-4 text-center text-gray-200">
+      <h2 className="text-2xl max-sm:text-1xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
         My Tweets
       </h2>
 
