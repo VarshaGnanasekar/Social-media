@@ -260,6 +260,11 @@ const FollowRequestsLink = () => (
             {user ? (
               <div className="flex items-center px-5">
                 <div className="flex-shrink-0">
+                  <Link 
+                  to="/profile" 
+                  className="flex items-center space-x-2 group"
+                  aria-label="Profile"
+                >
                   {user.user_metadata?.avatar_url ? (
                     <img
                       src={user.user_metadata.avatar_url}
@@ -271,8 +276,11 @@ const FollowRequestsLink = () => (
                       <span className="text-white text-lg font-medium">
                         {displayName?.charAt(0).toUpperCase()}
                       </span>
+                      
                     </div>
+                  
                   )}
+                  </Link>
                 </div>
                 <div className="ml-3">
                   <div className="text-base font-medium text-white truncate max-w-[160px]">
