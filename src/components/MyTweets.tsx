@@ -51,76 +51,75 @@ export const MyTweets = () => {
 
   if (!user)
     return (
-      <div className="max-w-md mx-auto p-6 bg-gray-800 rounded-lg text-center text-white">
+      <div className="max-w-md mx-auto p-4 bg-black rounded-lg text-center text-gray-300 text-sm">
         Please sign in to view your tweets.
       </div>
     );
 
   if (isLoading)
     return (
-      <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-purple-500"></div>
+      <div className="flex justify-center py-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
       </div>
     );
 
   if (error)
     return (
-      <div className="max-w-md mx-auto p-6 bg-red-900/20 rounded-lg text-center text-red-300">
+      <div className="max-w-md mx-auto p-4 bg-red-900/10 rounded-lg text-center text-red-400 text-sm">
         Error: {error.message}
       </div>
     );
 
   if (!data || data.length === 0)
     return (
-      <div className="max-w-md mx-auto p-6 bg-gray-800 rounded-lg text-center text-gray-400">
+      <div className="max-w-md mx-auto p-4 bg-black rounded-lg text-center text-gray-500 text-sm">
         You haven't tweeted anything yet.
       </div>
     );
 
   return (
-    <div className="pb-12 px-4">
-      <h2 className="text-4xl max-sm:text-2xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-cyan-400  bg-clip-text text-transparent">
+    <div className="pb-8 px-4">
+      <h2 className="text-2xl font-bold mb-4 text-center text-gray-200">
         My Tweets
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
         {data.map((tweet) => (
           <motion.div
             key={tweet.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="bg-gray-900 border border-gray-700 p-5 rounded-xl shadow-lg text-white flex flex-col justify-between"
+            transition={{ duration: 0.2 }}
+            className="bg-black border border-gray-800 p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow"
           >
-            <div>
-              <div className="flex items-center justify-between text-sm text-gray-400 mb-2">
+            <div className="mb-2">
+              <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
                 <span>@{tweet.author}</span>
                 <span>
                   {new Date(tweet.created_at).toLocaleDateString("en-US", {
-                    year: "numeric",
                     month: "short",
                     day: "numeric",
                   })}
                 </span>
               </div>
-              <p className="text-lg">{tweet.content}</p>
+              <p className="text-sm text-gray-200 line-clamp-3">{tweet.content}</p>
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => handleDelete(tweet.id)}
               disabled={isDeleting && deletingTweetId === tweet.id}
-              className={`mt-4 px-5 py-2 rounded-lg flex items-center gap-2 transition-all ${
+              className={`w-full mt-2 px-3 py-1 text-xs rounded-md flex items-center justify-center gap-1 transition-all ${
                 isDeleting && deletingTweetId === tweet.id
-                  ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-                  : "bg-red-600/20 hover:bg-red-600/30 text-red-400 hover:text-red-300"
+                  ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                  : "bg-red-900/30 hover:bg-red-900/40 text-red-400 hover:text-red-300"
               }`}
             >
               {isDeleting && deletingTweetId === tweet.id ? (
                 <>
                   <svg
-                    className="animate-spin h-5 w-5"
+                    className="animate-spin h-3 w-3"
                     viewBox="0 0 24 24"
                     fill="none"
                   >
@@ -143,7 +142,7 @@ export const MyTweets = () => {
               ) : (
                 <>
                   <svg
-                    className="w-5 h-5"
+                    className="w-3 h-3"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
