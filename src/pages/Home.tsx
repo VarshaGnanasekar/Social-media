@@ -9,7 +9,7 @@ export const Home = () => {
       </h2>
       <div>
         <PostList />
-        <TweetList />
+      
       </div>
     </div>
   );
