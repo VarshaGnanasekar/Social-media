@@ -1,5 +1,5 @@
 import { PostList } from "../components/PostList";
-import { TweetList } from "../components/TweetList";
+
 
 export const Home = () => {
   return (
